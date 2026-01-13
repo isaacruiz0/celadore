@@ -1,4 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
+import FadeInHero from '@/components/Hero'
+import NavBar from '@/components/Navbar'
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -6,8 +8,9 @@ export const Route = createFileRoute('/')({
 
 function App() {
   return (
-    <main className="flex justify-center">
-      <h1 className="text-center text-4xl">Celadore</h1>
+    <main>
+      <NavBar />
+      <FadeInHero />
     </main>
   )
 }
