@@ -1,10 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
-import FadeInHero from '@/components/Hero'
-import NavBar from '@/components/Navbar'
+import { createFileRoute } from '@tanstack/react-router';
+import FadeInHero from '@/components/Hero';
+import NavBar from '@/components/NavBar/NavBar';
 
 export const Route = createFileRoute('/')({
   component: App,
-})
+});
 
 function App() {
   return (
@@ -12,5 +12,5 @@ function App() {
       <NavBar />
       <FadeInHero />
     </main>
-  )
+  );
 }
