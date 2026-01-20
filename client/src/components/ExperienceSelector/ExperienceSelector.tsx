@@ -8,6 +8,7 @@ interface Experience {
   href: string;
   available: boolean;
 }
+// TODO: Source of truth for this should be in backend
 const allPossibleExperiences: Array<Experience> = [
   {
     id: 1,
@@ -21,27 +22,39 @@ const allPossibleExperiences: Array<Experience> = [
     href: '/experiences/reddit',
     available: false,
   },
+  {
+    id: 3,
+    label: 'Instagram',
+    href: '/experiences/instagram',
+    available: false,
+  },
+  {
+    id: 4,
+    label: 'Tiktok',
+    href: '/experiences/tiktok',
+    available: false,
+  },
 ];
 
 export default function ExperienceSelector() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedExperiences, setSelectedItems] = useState<Array<Experience>>(
-    [],
-  );
+  const [selectedExperiences, setSelectedExperiences] = useState<
+    Array<Experience>
+  >([]);
 
-  const addExperience = (item: Experience) => {
-    if (!selectedExperiences.find((i) => i?.id === item.id)) {
-      setSelectedItems([...selectedExperiences, item]);
+  const addExperience = (experience: Experience) => {
+    if (!selectedExperiences.find((i) => i?.id === experience.id)) {
+      setSelectedExperiences([...selectedExperiences, experience]);
     }
     setIsOpen(false);
   };
 
   const removeExperience = (id: Experience['id']) => {
-    setSelectedItems(selectedExperiences.filter((i) => i?.id !== id));
+    setSelectedExperiences(selectedExperiences.filter((i) => i?.id !== id));
   };
 
   const unselectedExperiences = allPossibleExperiences.filter(
-    (item) => !selectedExperiences.find((i) => i?.id === item.id),
+    (experience) => !selectedExperiences.find((i) => i?.id === experience.id),
   );
 
   return (
@@ -60,7 +73,7 @@ export default function ExperienceSelector() {
           <div className="text-sm opacity-70"></div>
         </div>
         <ChevronDown
-          className={`w-6 h-6 transition-all duration-500 relative z-10 ${isOpen ? 'rotate-180' : ''}`}
+          className={`opacity-75 w-6 h-6 transition-all duration-500 relative z-10 ${isOpen ? 'rotate-180' : ''}`}
         />
       </button>
 
@@ -76,18 +89,24 @@ export default function ExperienceSelector() {
         >
           {unselectedExperiences.length > 0 ? (
             <div className="divide-y divide-[#1a1a1a]/10">
-              {unselectedExperiences.map((item, index) => (
+              {unselectedExperiences.map((experience, index) => (
                 <button
-                  key={item.id}
-                  onClick={() => addExperience(item)}
+                  key={experience.id}
+                  onClick={() =>
+                    experience.available && addExperience(experience)
+                  }
                   className="w-full px-6 py-4 text-left hover:bg-[#f2d5a6]/20 transition-all duration-300 group relative overflow-hidden"
                   style={{
                     animation: `slideInStagger 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.08}s both`,
                   }}
                 >
-                  <div className="absolute inset-0 bg-linear-to-r from-[#f2d5a6]/0 via-[#f2d5a6]/30 to-[#f2d5a6]/0 translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                  <div className="font-medium text-[#1a1a1a] group-hover:translate-x-1 transition-transform duration-300 relative z-10">
-                    {item.label}
+                  <div className=" flex flex-col gap-1">
+                    <p className="font-medium text-[#1a1a1a] group-hover:translate-x-1 transition-transform duration-300 relative z-10">
+                      {experience.label}
+                    </p>
+                    {!experience.available && (
+                      <p className="text-sm opacity-70">Not yet available</p>
+                    )}
                   </div>
                 </button>
               ))}
@@ -101,9 +120,9 @@ export default function ExperienceSelector() {
       )}
 
       <div className="mt-6 grid grid-cols-1 gap-3">
-        {selectedExperiences.map((item, index) => (
+        {selectedExperiences.map((experience, index) => (
           <div
-            key={item.id}
+            key={experience.id}
             className="relative group"
             style={{
               animation: 'fadeInUp 0.5s ease-out forwards',
@@ -112,7 +131,7 @@ export default function ExperienceSelector() {
             }}
           >
             <a
-              href={item.href}
+              href={experience.href}
               className="block px-6 py-4 bg-transparent backdrop-blur-md text-[#1a1a1a] rounded-xl border-2 border-[#1a1a1a]/30 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
               style={{
                 boxShadow:
@@ -122,11 +141,11 @@ export default function ExperienceSelector() {
               <div className="absolute inset-0 bg-linear-to-br from-[#f2d5a6]/20 via-transparent to-[#1a1a1a]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="absolute inset-0 border-2 border-[#f2d5a6]/0 group-hover:border-[#f2d5a6]/30 rounded-xl transition-all duration-500"></div>
               <div className="font-medium relative z-10 group-hover:translate-x-1 transition-transform duration-300">
-                {item.label}
+                {experience.label}
               </div>
             </a>
             <button
-              onClick={() => removeExperience(item.id)}
+              onClick={() => removeExperience(experience.id)}
               className="absolute top-3 right-3 w-7 h-7 bg-[#1a1a1a]/80 backdrop-blur-sm text-[#f2f2f2] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 border border-[#f2d5a6]/30"
               style={{
                 boxShadow: '0 0 15px rgba(26, 26, 26, 0.3)',
