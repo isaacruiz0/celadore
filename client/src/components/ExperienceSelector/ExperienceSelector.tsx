@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronDown, X } from 'lucide-react';
+import { ChevronDown, StepForward } from 'lucide-react';
 import './styles.css';
 
 interface Experience {
@@ -49,14 +49,11 @@ export default function ExperienceSelector() {
     setIsOpen(false);
   };
 
-  const removeExperience = (id: Experience['id']) => {
-    setSelectedExperiences(selectedExperiences.filter((i) => i?.id !== id));
-  };
-
   const unselectedExperiences = allPossibleExperiences.filter(
     (experience) => !selectedExperiences.find((i) => i?.id === experience.id),
   );
 
+  // TODO: Once component gets more complicated starting breaking this up
   return (
     <div className="w-full max-w-md">
       <button
@@ -132,27 +129,17 @@ export default function ExperienceSelector() {
           >
             <a
               href={experience.href}
-              className="block px-6 py-4 bg-transparent backdrop-blur-md text-[#1a1a1a] rounded-xl border-2 border-[#1a1a1a]/30 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
+              className="flex justify-between items-center px-6 py-4 bg-transparent backdrop-blur-md text-[#1a1a1a] rounded-xl border-2 border-[#1a1a1a]/30 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
               style={{
                 boxShadow:
                   '0 0 25px rgba(26, 26, 26, 0.12), inset 0 0 25px rgba(242, 213, 166, 0.2)',
               }}
             >
-              <div className="absolute inset-0 bg-linear-to-br from-[#f2d5a6]/20 via-transparent to-[#1a1a1a]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="absolute inset-0 border-2 border-[#f2d5a6]/0 group-hover:border-[#f2d5a6]/30 rounded-xl transition-all duration-500"></div>
               <div className="font-medium relative z-10 group-hover:translate-x-1 transition-transform duration-300">
                 {experience.label}
               </div>
+              <StepForward className="opacity-75 w-4 h-4]" />
             </a>
-            <button
-              onClick={() => removeExperience(experience.id)}
-              className="absolute top-3 right-3 w-7 h-7 bg-[#1a1a1a]/80 backdrop-blur-sm text-[#f2f2f2] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 border border-[#f2d5a6]/30"
-              style={{
-                boxShadow: '0 0 15px rgba(26, 26, 26, 0.3)',
-              }}
-            >
-              <X className="w-4 h-4" />
-            </button>
           </div>
         ))}
       </div>
