@@ -2,38 +2,46 @@ import { useState } from 'react';
 import { ChevronDown, X } from 'lucide-react';
 import './styles.css';
 
+interface Experience {
+  id: number;
+  label: string;
+  href: string;
+  available: boolean;
+}
+const allExperiences: Array<Experience> = [
+  {
+    id: 1,
+    label: 'Youtube',
+    href: '/experiences/youtube',
+    available: true,
+  },
+  {
+    id: 2,
+    label: 'Reddit',
+    href: '/experiences/reddit',
+    available: false,
+  },
+];
+
 export default function ExperienceSelector() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [selectedExperiences, setSelectedItems] = useState<
+    Array<Experience | null>
+  >([]);
 
-  const availableItems = [
-    {
-      id: 1,
-      label: 'Youtube',
-      href: '/experiences/youtube',
-      available: true,
-    },
-    {
-      id: 2,
-      label: 'Reddit',
-      href: '/experiences/Reddit',
-      available: false,
-    },
-  ];
-
-  const addItem = (item) => {
-    if (!selectedItems.find((i) => i.id === item.id)) {
-      setSelectedItems([...selectedItems, item]);
+  const addItem = (item: Experience) => {
+    if (!selectedExperiences.find((i) => i?.id === item.id)) {
+      setSelectedItems([...selectedExperiences, item]);
     }
     setIsOpen(false);
   };
 
-  const removeItem = (id) => {
-    setSelectedItems(selectedItems.filter((i) => i.id !== id));
+  const removeExperience = (id: Experience['id']) => {
+    setSelectedItems(selectedExperiences.filter((i) => i?.id !== id));
   };
 
-  const unselectedItems = availableItems.filter(
-    (item) => !selectedItems.find((i) => i.id === item.id),
+  const unselectedExperiences = allExperiences.filter(
+    (item) => !selectedExperiences.find((i) => i?.id === item.id),
   );
 
   return (
@@ -66,9 +74,9 @@ export default function ExperienceSelector() {
               'elegantReveal 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
           }}
         >
-          {unselectedItems.length > 0 ? (
+          {unselectedExperiences.length > 0 ? (
             <div className="divide-y divide-[#1a1a1a]/10">
-              {unselectedItems.map((item, index) => (
+              {unselectedExperiences.map((item, index) => (
                 <button
                   key={item.id}
                   onClick={() => addItem(item)}
@@ -89,14 +97,14 @@ export default function ExperienceSelector() {
             </div>
           ) : (
             <div className="px-6 py-4 text-[#1a1a1a]/50 text-center">
-              All items selected
+              All experiences selected
             </div>
           )}
         </div>
       )}
 
       <div className="mt-6 grid grid-cols-1 gap-3">
-        {selectedItems.map((item, index) => (
+        {selectedExperiences.map((item, index) => (
           <div
             key={item.id}
             className="relative group"
