@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import ExperienceSelector from '@/components/ExperienceSelector/ExperienceSelector';
+import ExperienceSelector from '@/components/features/ExperienceSelector/ExperienceSelector';
 
 export const Route = createFileRoute('/experiences/')({
   component: Experiences,
@@ -7,7 +7,7 @@ export const Route = createFileRoute('/experiences/')({
 
 function Experiences() {
   return (
-    <div className="min-h-screen flex flex-col items-center bg-linear-to-br bg-gold-light from-gold-light via-white to-gold-light px-5 py-10">
+    <div className="min-h-screen flex flex-col items-center bg-linear-to-br bg-gold-light from-gold-light via-white to-gold-light py-10">
       <h1 className="text-center text-5xl font-bold text-[#224] animate-fade-in antialiased">
         Celadore
       </h1>

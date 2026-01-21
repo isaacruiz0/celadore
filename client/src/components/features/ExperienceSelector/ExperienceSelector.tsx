@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown, StepForward } from 'lucide-react';
+import EllipsesMenu from '@/components/general/ellipsesMenu/EllipsesMenu';
 import './styles.css';
 
 interface Experience {
@@ -55,23 +56,22 @@ export default function ExperienceSelector() {
 
   // TODO: Once component gets more complicated starting breaking this up
   return (
-    <div className="w-full max-w-md">
+    <div className="w-full relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-6 py-4 bg-transparent backdrop-blur-md text-[#1a1a1a] rounded-2xl border-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/40 transition-all duration-500 flex items-center justify-between group relative overflow-hidden"
-        style={{
-          boxShadow:
-            '0 0 20px rgba(26, 26, 26, 0.1), inset 0 0 20px rgba(242, 213, 166, 0.15)',
-        }}
+        className="w-full px-6 py-4 bg-transparent backdrop-blur-md flex items-center justify-between border-2 border-[#1a1a1a]/20"
       >
-        <div className="absolute inset-0 bg-linear-to-br from-[#f2d5a6]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-        <div className="text-left relative z-10">
-          <div className="font-semibold text-lg">Experiences</div>
-          <div className="text-sm opacity-70"></div>
+        <div className="text-left relative">
+          <div className="font-semibold text-2xl text-[#224]/90">
+            Experiences
+          </div>
         </div>
-        <ChevronDown
-          className={`opacity-75 w-6 h-6 transition-all duration-500 relative z-10 ${isOpen ? 'rotate-180' : ''}`}
-        />
+        <div className="self-start">
+          <EllipsesMenu />
+        </div>
+        {/*<ChevronDown
+          className={` relative z-10 ${isOpen ? 'rotate-180' : ''}`}
+        />*/}
       </button>
 
       {isOpen && (
@@ -129,16 +129,16 @@ export default function ExperienceSelector() {
           >
             <a
               href={experience.href}
-              className="flex justify-between items-center px-6 py-4 bg-transparent backdrop-blur-md text-[#1a1a1a] rounded-xl border-2 border-[#1a1a1a]/30 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
+              className="flex justify-between items-center px-6 py-4 bg-transparent backdrop-blur-md text-[#1a1a1a] border-2 border-[#1a1a1a]/30 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
               style={{
                 boxShadow:
                   '0 0 25px rgba(26, 26, 26, 0.12), inset 0 0 25px rgba(242, 213, 166, 0.2)',
               }}
             >
-              <div className="font-medium relative z-10 group-hover:translate-x-1 transition-transform duration-300">
+              <div className="text-2xl relative z-10 group-hover:translate-x-1 transition-transform duration-300">
                 {experience.label}
               </div>
-              <StepForward className="opacity-75 w-4 h-4]" />
+              <StepForward className="opacity-75 w-8 h-8]" />
             </a>
           </div>
         ))}
