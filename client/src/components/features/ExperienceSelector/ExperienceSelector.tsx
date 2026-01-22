@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { StepForward } from 'lucide-react';
-import EllipsesMenu from '@/components/markup/EllipsesMenu';
+import Ellipses from '@/components/markup/Ellipses';
 import './styles.css';
-// import { Link } from '@tankstack/react-router';
+import { Link } from '@tanstack/react-router';
 
 interface Experience {
   id: number;
@@ -103,8 +103,8 @@ function SubscribedExperiencesList({
             opacity: 0,
           }}
         >
-          <a
-            href={experience.href}
+          <Link
+            to={experience.href}
             className="flex justify-between items-center px-6 py-4 bg-transparent backdrop-blur-md text-[#1a1a1a] border-2 border-[#1a1a1a]/30 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
             style={{
               boxShadow:
@@ -115,7 +115,7 @@ function SubscribedExperiencesList({
               {experience.label}
             </div>
             <StepForward className="opacity-75 w-8 h-8]" />
-          </a>
+          </Link>
         </div>
       ))}
     </div>
@@ -151,7 +151,7 @@ export default function ExperienceSelector() {
           </div>
         </div>
         <div className="self-start">
-          <EllipsesMenu />
+          <Ellipses />
         </div>
       </button>
 
