@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StepForward, SquarePlus, SquareMinus } from 'lucide-react';
+import { SquarePlus, SquareMinus, ChevronsRight } from 'lucide-react';
 import Ellipses from '@/components/markup/Ellipses';
 import './styles.css';
 import { Link } from '@tanstack/react-router';
@@ -93,11 +93,11 @@ function SubscribedExperiencesList({
   subscribedExperiences: Experience[];
 }) {
   return (
-    <div className="mt-6 grid grid-cols-1 gap-3">
+    <div className="grid grid-cols-1 gap-3">
       {subscribedExperiences.map((experience, index) => (
         <div
           key={experience.id}
-          className="relative group"
+          className="relative"
           style={{
             animation: 'fadeInUp 0.5s ease-out forwards',
             animationDelay: `${index * 0.1}s`,
@@ -106,16 +106,16 @@ function SubscribedExperiencesList({
         >
           <Link
             to={experience.href}
-            className="flex justify-between items-center px-6 py-4 bg-transparent backdrop-blur-md text-[#1a1a1a] border-2 border-[#1a1a1a]/30 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
+            className="flex justify-between items-center px-6 py-8 bg-transparent backdrop-blur-md text-3xl text-[#224] border-b-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
             style={{
               boxShadow:
                 '0 0 25px rgba(26, 26, 26, 0.12), inset 0 0 25px rgba(242, 213, 166, 0.2)',
             }}
           >
-            <div className="text-2xl relative z-10 group-hover:translate-x-1 transition-transform duration-300">
+            <div className="group-hover:translate-x-1 transition-transform duration-300">
               {experience.label}
             </div>
-            <StepForward className="opacity-75 w-8 h-8]" />
+            <ChevronsRight className="text-[#224]/70 w-8 h-8" />
           </Link>
         </div>
       ))}
@@ -156,9 +156,7 @@ export default function ExperienceSelector() {
     <div className="w-full relative">
       <button className="w-full px-6 py-4 bg-transparent backdrop-blur-md flex items-center justify-between border-2 border-[#1a1a1a]/20">
         <div className="text-left relative">
-          <div className="font-semibold text-2xl text-[#224]/90">
-            Experiences
-          </div>
+          <div className="font-semibold text-2xl text-[#224]">Experiences</div>
         </div>
         <div className="self-start">
           <Menu.Root>
