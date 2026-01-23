@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 
 app.use(express.json());
 
-const clientDistPath = path.join(__dirname, "../dist");
+const clientDistPath = path.join(__dirname, "../../client/dist");
 app.use(express.static(clientDistPath));
 
 // SPA fallback

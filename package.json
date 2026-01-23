@@ -1,0 +1,14 @@
+{
+  "name": "celadore",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix server && npm install --prefix client && npm build --prefix client",
+    "start": "npm start --prefix server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
