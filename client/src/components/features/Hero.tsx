@@ -12,7 +12,7 @@ export default function FadeInHero() {
         </p>
         <Link
           to="/experiences"
-          className="mt-4 relative px-8 py-4 bg-transparent backdrop-blur-md border-2 border-[#1a1a1a]/30 rounded-2xl overflow-hidden transition-all duration-500 hover:border-[#1a1a1a]/50 active:scale-95 hover:shadow-2xl hover:shadow-[#1a1a1a]/10"
+          className="animate-fade-in-delayed-plus mt-4 relative px-8 py-4 bg-transparent backdrop-blur-md border-2 border-[#1a1a1a]/30 rounded-2xl overflow-hidden transition-all duration-500 hover:border-[#1a1a1a]/50 active:scale-95 hover:shadow-2xl hover:shadow-[#1a1a1a]/10"
         >
           <div className="absolute inset-0 bg-linear-to-r from-transparent via-[silver]/25 to-transparent animate-shimmer"></div>
 
