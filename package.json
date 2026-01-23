@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm install --prefix server && npm install --prefix client && npm build --prefix client",
-    "start": "npm start --prefix server",
+    "build": "pnpm --prefix server install && pnpm --prefix client install  && pnpm --prefix client build ",
+    "start": "npm --prefix server start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
