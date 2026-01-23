@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ExperiencesIndexRouteImport } from './routes/experiences/index'
+import { Route as ExperiencesYoutubeIndexRouteImport } from './routes/experiences/youtube/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const ExperiencesIndexRoute = ExperiencesIndexRouteImport.update({
   path: '/experiences/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExperiencesYoutubeIndexRoute = ExperiencesYoutubeIndexRouteImport.update({
+  id: '/experiences/youtube/',
+  path: '/experiences/youtube/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/experiences': typeof ExperiencesIndexRoute
+  '/experiences/youtube': typeof ExperiencesYoutubeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/experiences': typeof ExperiencesIndexRoute
+  '/experiences/youtube': typeof ExperiencesYoutubeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/experiences/': typeof ExperiencesIndexRoute
+  '/experiences/youtube/': typeof ExperiencesYoutubeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/experiences'
+  fullPaths: '/' | '/experiences' | '/experiences/youtube'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/experiences'
-  id: '__root__' | '/' | '/experiences/'
+  to: '/' | '/experiences' | '/experiences/youtube'
+  id: '__root__' | '/' | '/experiences/' | '/experiences/youtube/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ExperiencesIndexRoute: typeof ExperiencesIndexRoute
+  ExperiencesYoutubeIndexRoute: typeof ExperiencesYoutubeIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExperiencesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/experiences/youtube/': {
+      id: '/experiences/youtube/'
+      path: '/experiences/youtube'
+      fullPath: '/experiences/youtube'
+      preLoaderRoute: typeof ExperiencesYoutubeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ExperiencesIndexRoute: ExperiencesIndexRoute,
+  ExperiencesYoutubeIndexRoute: ExperiencesYoutubeIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
