@@ -14,7 +14,7 @@ const clientDistPath = path.join(__dirname, "../../client/dist");
 app.use(express.static(clientDistPath));
 
 // SPA fallback
-app.all("/{*any}", (req: Request, res: Response) => {
+app.all("*", (req: Request, res: Response) => {
   res.sendFile(path.join(clientDistPath, "index.html"));
 });
 app.listen(PORT, () => {
