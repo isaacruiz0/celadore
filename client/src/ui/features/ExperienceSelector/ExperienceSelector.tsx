@@ -78,7 +78,7 @@ function ExperienceMenu({
                 <p
                   className={
                     (experience.available ? 'pb-1.75 pt-1.75' : '') +
-                    ' font-medium text-[#1a1a1a] group-hover:translate-x-1 transition-transform duration-300 relative z-10'
+                    ' text-lg font-medium text-[#1a1a1a] group-hover:translate-x-1 transition-transform duration-300 relative z-10'
                   }
                 >
                   {experience.label}
