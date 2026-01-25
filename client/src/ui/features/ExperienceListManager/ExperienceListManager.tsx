@@ -28,7 +28,7 @@ const allPossibleExperiences: Array<Experience> = [
     id: 2,
     label: 'Reddit',
     href: '/experiences/reddit',
-    available: false,
+    available: true,
   },
   {
     id: 3,
@@ -112,7 +112,7 @@ function SubscribedExperiencesList({
   subscribedExperiences: Experience[];
 }) {
   return (
-    <div className="grid grid-cols-1 gap-3">
+    <div className="flex flex-col">
       {subscribedExperiences.map((experience, index) => (
         <div
           key={experience.id}
