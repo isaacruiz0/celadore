@@ -1,5 +1,10 @@
 import { useState } from 'react';
-import { SquarePlus, SquareMinus, ChevronsRight } from 'lucide-react';
+import {
+  SquarePlus,
+  SquareMinus,
+  ChevronsRight,
+  ChevronUp,
+} from 'lucide-react';
 import Ellipses from '@/components/markup/Ellipses';
 import './styles.css';
 import { Link } from '@tanstack/react-router';
@@ -42,9 +47,11 @@ const allPossibleExperiences: Array<Experience> = [
 function ExperienceMenu({
   notSubscribedExperiences,
   addExperience,
+  onClose,
 }: {
   notSubscribedExperiences: Experience[];
   addExperience: (exp: Experience) => void;
+  onClose: () => void;
 }) {
   return (
     <div
@@ -88,6 +95,13 @@ function ExperienceMenu({
           All experiences selected
         </div>
       )}
+      <button
+        // TODO: Run closing animation then remove element
+        onClick={onClose}
+        className="flex justify-center border-t border-t-[#1a1a1a]/10 items-center w-full px-6 py-4  hover:bg-[#f2d5a6]/20 "
+      >
+        <ChevronUp color="#224" className="opacity-70" />
+      </button>
     </div>
   );
 }
@@ -159,7 +173,7 @@ export default function ExperienceSelector() {
 
   return (
     <div className="w-full relative">
-      <button className="w-full px-6 py-4 bg-transparent backdrop-blur-md flex items-center justify-between border-2 border-[#1a1a1a]/20">
+      <div className="w-full px-6 py-4 bg-transparent backdrop-blur-md flex items-center justify-between border-2 border-[#1a1a1a]/20">
         <div className="text-left relative">
           <div className="font-semibold text-2xl text-[#224]">Experiences</div>
         </div>
@@ -189,12 +203,13 @@ export default function ExperienceSelector() {
             </Menu.Portal>
           </Menu.Root>
         </div>
-      </button>
+      </div>
 
       {isOpen && (
         <ExperienceMenu
           addExperience={addExperience}
           notSubscribedExperiences={notSubscribedExperiences}
+          onClose={() => setIsOpen(false)}
         />
       )}
       <SubscribedExperiencesList
