@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import ExperienceSelector from '@/ui/features/ExperienceSelector/ExperienceSelector';
+import ExperienceListManager from '@/ui/features/ExperienceListManager/ExperienceListManager';
 
 export const Route = createFileRoute('/experiences/')({
   component: Experiences,
@@ -15,7 +15,7 @@ function Experiences() {
       </Link>
 
       <div className="animate-fade-in mt-5 w-full">
-        <ExperienceSelector />
+        <ExperienceListManager />
       </div>
     </div>
   );

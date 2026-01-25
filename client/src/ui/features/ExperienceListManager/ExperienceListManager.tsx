@@ -44,7 +44,7 @@ const allPossibleExperiences: Array<Experience> = [
   },
 ];
 
-function ExperienceMenu({
+function ExperienceSelector({
   notSubscribedExperiences,
   addExperience,
   onClose,
@@ -142,7 +142,7 @@ function SubscribedExperiencesList({
   );
 }
 
-export default function ExperienceSelector() {
+export default function ExperienceListManager() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [subscribedExperiences, setSubscribedExperiences] = useState<
     Array<Experience>
@@ -206,7 +206,7 @@ export default function ExperienceSelector() {
       </div>
 
       {isOpen && (
-        <ExperienceMenu
+        <ExperienceSelector
           addExperience={addExperience}
           notSubscribedExperiences={notSubscribedExperiences}
           onClose={() => setIsOpen(false)}
