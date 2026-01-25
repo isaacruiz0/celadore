@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import ExperienceSelector from '@/components/features/ExperienceSelector/ExperienceSelector';
+import ExperienceSelector from '@/ui/features/ExperienceSelector/ExperienceSelector';
 
 export const Route = createFileRoute('/experiences/')({
   component: Experiences,
