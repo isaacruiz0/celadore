@@ -5,7 +5,7 @@ import {
   ChevronsRight,
   ChevronUp,
 } from 'lucide-react';
-import Ellipses from '@/components/markup/Ellipses';
+import Ellipses from '@/ui/markup/Ellipses';
 import './styles.css';
 import { Link } from '@tanstack/react-router';
 import { Menu } from '@base-ui/react/menu';

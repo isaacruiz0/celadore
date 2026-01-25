@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 
-export default function FadeInHero() {
+export default function Hero() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-[#F2D5A6] via-white to-[#F2D5A6]">
       <div className="flex flex-col gap-1 items-center">
