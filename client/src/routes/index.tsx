@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import FadeInHero from '@/ui/features/Hero';
+import FadeInHero from '@/ui/markup/Hero';
 // import NavBar from '@/components/features/NavBar/NavBar';
 
 export const Route = createFileRoute('/')({
