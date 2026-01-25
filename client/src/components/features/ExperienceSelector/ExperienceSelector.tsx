@@ -68,7 +68,12 @@ function ExperienceMenu({
               }}
             >
               <div className=" flex flex-col gap-1">
-                <p className="font-medium text-[#1a1a1a] group-hover:translate-x-1 transition-transform duration-300 relative z-10">
+                <p
+                  className={
+                    (experience.available ? 'pb-1.75 pt-1.75' : '') +
+                    ' font-medium text-[#1a1a1a] group-hover:translate-x-1 transition-transform duration-300 relative z-10'
+                  }
+                >
                   {experience.label}
                 </p>
                 {!experience.available && (
@@ -172,7 +177,7 @@ export default function ExperienceSelector() {
                     return (
                       <Menu.Item
                         onClick={menuItem.onClick}
-                        className="flex gap-1 items-center cursor-pointer py-2 pr-8 pl-4 text-sm leading-4 outline-none select-none data-highlighted:relative data-highlighted:z-0 data-highlighted:text-gray-50 data-highlighted:before:absolute data-highlighted:before:inset-x-1 data-highlighted:before:inset-y-0 data-highlighted:before:z-[-1] data-highlighted:before:rounded-sm data-highlighted:before:bg-gray-900"
+                        className="flex gap-1 items-center cursor-pointer py-2 pr-8 pl-4 text-sm leading-4 outline-none select-none data-highlighted:relative data-highlighted:z-0 data-highlighted:text-gray-50 data-highlighted:before:absolute data-highlighted:before:inset-x-1 data-highlighted:before:inset-y-0 data-highlighted:before:z-[-1] data-highlighted:before:rounded-sm data-highlighted:before:bg-[#224]"
                       >
                         <span className="text-lg">{menuItem.label}</span>
                         <Icon className="h-4 w-4" />
