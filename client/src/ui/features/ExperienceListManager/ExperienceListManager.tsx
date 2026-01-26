@@ -4,11 +4,14 @@ import {
   SquareMinus,
   ChevronsRight,
   ChevronUp,
+  XIcon,
 } from 'lucide-react';
 import Ellipses from '@/ui/markup/Ellipses';
 import './styles.css';
 import { Link } from '@tanstack/react-router';
 import { Menu } from '@base-ui/react/menu';
+
+type ViewMode = 'remove' | 'show';
 
 interface Experience {
   id: number;
@@ -108,8 +111,10 @@ function ExperienceSelector({
 
 function SubscribedExperiencesList({
   subscribedExperiences,
+  viewMode,
 }: {
   subscribedExperiences: Experience[];
+  viewMode: ViewMode;
 }) {
   return (
     <div className="flex flex-col">
@@ -123,19 +128,35 @@ function SubscribedExperiencesList({
             opacity: 0,
           }}
         >
-          <Link
-            to={experience.href}
-            className="flex justify-between items-center px-6 py-8 bg-transparent backdrop-blur-md text-3xl text-[#224] border-b-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
-            style={{
-              boxShadow:
-                '0 0 25px rgba(26, 26, 26, 0.12), inset 0 0 25px rgba(242, 213, 166, 0.2)',
-            }}
-          >
-            <div className="group-hover:translate-x-1 transition-transform duration-300">
-              {experience.label}
+          {viewMode === 'show' && (
+            <Link
+              to={experience.href}
+              className="flex justify-between items-center px-6 py-8 bg-transparent backdrop-blur-md text-3xl text-[#224] border-b-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
+              style={{
+                boxShadow:
+                  '0 0 25px rgba(26, 26, 26, 0.12), inset 0 0 25px rgba(242, 213, 166, 0.2)',
+              }}
+            >
+              <div className="group-hover:translate-x-1 transition-transform duration-300">
+                {experience.label}
+              </div>
+              <ChevronsRight className="text-[#224]/70 w-8 h-8" />
+            </Link>
+          )}
+          {viewMode === 'remove' && (
+            <div
+              className="flex justify-between items-center px-6 py-8 bg-transparent backdrop-blur-md text-3xl text-[#224] border-b-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
+              style={{
+                boxShadow:
+                  '0 0 25px rgba(26, 26, 26, 0.12), inset 0 0 25px rgba(242, 213, 166, 0.2)',
+              }}
+            >
+              <div className="group-hover:translate-x-1 transition-transform duration-300">
+                {experience.label}
+              </div>
+              <XIcon className="text-[#224]/70 w-8 h-8" />
             </div>
-            <ChevronsRight className="text-[#224]/70 w-8 h-8" />
-          </Link>
+          )}
         </div>
       ))}
     </div>
@@ -144,6 +165,7 @@ function SubscribedExperiencesList({
 
 export default function ExperienceListManager() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [viewMode, setViewMode] = useState<ViewMode>('show');
   const [subscribedExperiences, setSubscribedExperiences] = useState<
     Array<Experience>
   >([]);
@@ -168,12 +190,13 @@ export default function ExperienceListManager() {
     {
       label: 'Remove',
       icon: SquareMinus,
+      onClick: () => setViewMode('remove'),
     },
   ];
 
   return (
-    <div className="w-full relative">
-      <div className="w-full px-6 py-4 bg-transparent backdrop-blur-md flex items-center justify-between border-2 border-[#1a1a1a]/20">
+    <div className="w-full">
+      <div className="w-full animate-fade-in px-6 py-4 bg-transparent backdrop-blur-md flex items-center justify-between border-x-0 border-2 border-[#1a1a1a]/20">
         <div className="text-left relative">
           <div className="font-semibold text-2xl text-[#224]">Experiences</div>
         </div>
@@ -214,7 +237,24 @@ export default function ExperienceListManager() {
       )}
       <SubscribedExperiencesList
         subscribedExperiences={subscribedExperiences}
+        viewMode={viewMode}
       />
+
+      {viewMode === 'remove' && (
+        <div
+          className="absolute bottom-10 w-full flex justify-center
+            "
+        >
+          <button
+            onClick={() => setViewMode('show')}
+            className=" animate-fade-in mt-4 px-8 py-4 bg-transparent backdrop-blur-md border-2 border-[#1a1a1a]/30 rounded-2xl overflow-hidden transition-all duration-500 hover:border-[#1a1a1a]/50 active:scale-95 hover:shadow-2xl hover:shadow-[#1a1a1a]/10"
+          >
+            <span className=" z-10 text-lg font-semibold tracking-wide text-[#224]/80 group-hover:text-[#1a1a1a] transition-colors duration-300">
+              Done
+            </span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }

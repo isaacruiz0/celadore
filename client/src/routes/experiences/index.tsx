@@ -14,7 +14,7 @@ function Experiences() {
         </h1>
       </Link>
 
-      <div className="animate-fade-in mt-5 w-full">
+      <div className="mt-5 w-full">
         <ExperienceListManager />
       </div>
     </div>
