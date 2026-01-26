@@ -10,15 +10,8 @@ import Ellipses from '@/ui/markup/Ellipses';
 import './styles.css';
 import { Link } from '@tanstack/react-router';
 import { Menu } from '@base-ui/react/menu';
+import type { ViewMode, Experience } from './types';
 
-type ViewMode = 'remove' | 'show';
-
-interface Experience {
-  id: number;
-  label: string;
-  href: string;
-  available: boolean;
-}
 // TODO: Source of truth for this should be in backend
 const allPossibleExperiences: Array<Experience> = [
   {
