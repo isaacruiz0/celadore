@@ -109,19 +109,27 @@ function SubscribedExperiencesList({
   subscribedExperiences: Experience[];
   viewMode: ViewMode;
 }) {
-  return (
-    <div className="flex flex-col">
-      {subscribedExperiences.map((experience, index) => (
-        <div
-          key={experience.id}
-          className="relative"
-          style={{
-            animation: 'fadeInUp 0.5s ease-out forwards',
-            animationDelay: `${index * 0.1}s`,
-            opacity: 0,
-          }}
-        >
-          {viewMode === 'show' && (
+  const renderViewMode = (experience: Experience, viewMode: ViewMode) => {
+    switch (viewMode) {
+      case 'remove':
+        return (
+          <button
+            className="flex justify-between items-center px-6 py-8 bg-transparent backdrop-blur-md text-3xl text-[#224] border-b-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
+            style={{
+              boxShadow:
+                '0 0 25px rgba(26, 26, 26, 0.12), inset 0 0 25px rgba(242, 213, 166, 0.2)',
+            }}
+          >
+            <div className="group-hover:translate-x-1 transition-transform duration-300">
+              {experience.label}
+            </div>
+            <XIcon className="text-[#224]/70 w-8 h-8" />
+          </button>
+        );
+
+      case 'show':
+        return (
+          <button>
             <Link
               to={experience.href}
               className="flex justify-between items-center px-6 py-8 bg-transparent backdrop-blur-md text-3xl text-[#224] border-b-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
@@ -135,21 +143,27 @@ function SubscribedExperiencesList({
               </div>
               <ChevronsRight className="text-[#224]/70 w-8 h-8" />
             </Link>
-          )}
-          {viewMode === 'remove' && (
-            <div
-              className="flex justify-between items-center px-6 py-8 bg-transparent backdrop-blur-md text-3xl text-[#224] border-b-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
-              style={{
-                boxShadow:
-                  '0 0 25px rgba(26, 26, 26, 0.12), inset 0 0 25px rgba(242, 213, 166, 0.2)',
-              }}
-            >
-              <div className="group-hover:translate-x-1 transition-transform duration-300">
-                {experience.label}
-              </div>
-              <XIcon className="text-[#224]/70 w-8 h-8" />
-            </div>
-          )}
+            ;
+          </button>
+        );
+      default:
+        null;
+    }
+  };
+
+  return (
+    <div className="flex flex-col">
+      {subscribedExperiences.map((experience, index) => (
+        <div
+          key={experience.id}
+          className="relative"
+          style={{
+            animation: 'fadeInUp 0.5s ease-out forwards',
+            animationDelay: `${index * 0.1}s`,
+            opacity: 0,
+          }}
+        >
+          {renderViewMode(experience, viewMode)}
         </div>
       ))}
     </div>
