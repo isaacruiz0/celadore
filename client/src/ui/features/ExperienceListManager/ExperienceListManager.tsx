@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AlertDialog } from '@base-ui/react/alert-dialog';
 import {
   SquarePlus,
   SquareMinus,
@@ -65,7 +66,7 @@ function ExperienceSelector({
             <button
               key={experience.id}
               onClick={() => experience.available && addExperience(experience)}
-              className="w-full px-6 py-4 text-left hover:bg-[#f2d5a6]/20 transition-all duration-300 group relative overflow-hidden"
+              className="cursor-pointer w-full px-6 py-4 text-left hover:bg-[#f2d5a6]/20 transition-all duration-300 group relative overflow-hidden"
               style={{
                 animation: `slideInStagger 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.08}s both`,
               }}
@@ -94,7 +95,7 @@ function ExperienceSelector({
       <button
         // TODO: Run closing animation then remove element
         onClick={onClose}
-        className="flex justify-center border-t border-t-[#1a1a1a]/10 items-center w-full px-6 py-4  hover:bg-[#f2d5a6]/20 "
+        className="cursor-pointer flex justify-center border-t border-t-[#1a1a1a]/10 items-center w-full px-6 py-4  hover:bg-[#f2d5a6]/20 "
       >
         <ChevronUp color="#224" className="opacity-70" />
       </button>
@@ -105,15 +106,64 @@ function ExperienceSelector({
 function SubscribedExperiencesList({
   subscribedExperiences,
   viewMode,
+  onRemove,
 }: {
   subscribedExperiences: Experience[];
   viewMode: ViewMode;
+  onRemove: (experienceID: number) => void;
 }) {
-  const renderViewMode = (experience: Experience, viewMode: ViewMode) => {
+  const renderViewMode = (
+    experience: Experience,
+    viewMode: ViewMode,
+    onRemove: (experienceID: number) => void,
+  ) => {
     switch (viewMode) {
       case 'remove':
         return (
-          <button
+          <div
+            className="w-full flex justify-between items-center px-6 py-8 bg-transparent backdrop-blur-md text-3xl text-[#224] border-b-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
+            style={{
+              boxShadow:
+                '0 0 25px rgba(26, 26, 26, 0.12), inset 0 0 25px rgba(242, 213, 166, 0.2)',
+            }}
+          >
+            <div className="group-hover:translate-x-1 transition-transform duration-300">
+              {experience.label}
+            </div>
+            <AlertDialog.Root>
+              <AlertDialog.Trigger>
+                <XIcon className="text-[#224]/70 w-8 h-8 cursor-pointer" />
+              </AlertDialog.Trigger>
+              <AlertDialog.Portal>
+                <AlertDialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
+                <AlertDialog.Popup className="fixed top-1/2 left-1/2 -mt-8 w-96 max-w-[calc(100vw-3rem)] -translate-x-1/2 -translate-y-1/2 rounded-lg bg-gray-50 p-6 text-gray-900 outline outline-1 outline-gray-200 transition-all duration-150 data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 dark:outline-gray-300">
+                  <AlertDialog.Title className="-mt-1.5 mb-1 text-lg font-medium">
+                    Delete experience?
+                  </AlertDialog.Title>
+                  <AlertDialog.Description className="mb-6 text-base text-gray-600">
+                    You can’t undo this action.
+                  </AlertDialog.Description>
+                  <div className="flex justify-end gap-4">
+                    <AlertDialog.Close className="cursor-pointer flex h-10 items-center justify-center rounded-md border border-gray-200 bg-gray-50 px-3.5 text-base font-medium text-gray-900 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100">
+                      Cancel
+                    </AlertDialog.Close>
+                    <AlertDialog.Close
+                      onClick={() => onRemove(experience.id)}
+                      className="cursor-pointer flex h-10 items-center justify-center rounded-md border border-gray-200 bg-gray-50 px-3.5 text-base font-medium text-red-800 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100"
+                    >
+                      Delete
+                    </AlertDialog.Close>
+                  </div>
+                </AlertDialog.Popup>
+              </AlertDialog.Portal>
+            </AlertDialog.Root>
+          </div>
+        );
+
+      case 'show':
+        return (
+          <Link
+            to={experience.href}
             className="flex justify-between items-center px-6 py-8 bg-transparent backdrop-blur-md text-3xl text-[#224] border-b-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
             style={{
               boxShadow:
@@ -123,28 +173,8 @@ function SubscribedExperiencesList({
             <div className="group-hover:translate-x-1 transition-transform duration-300">
               {experience.label}
             </div>
-            <XIcon className="text-[#224]/70 w-8 h-8" />
-          </button>
-        );
-
-      case 'show':
-        return (
-          <button>
-            <Link
-              to={experience.href}
-              className="flex justify-between items-center px-6 py-8 bg-transparent backdrop-blur-md text-3xl text-[#224] border-b-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
-              style={{
-                boxShadow:
-                  '0 0 25px rgba(26, 26, 26, 0.12), inset 0 0 25px rgba(242, 213, 166, 0.2)',
-              }}
-            >
-              <div className="group-hover:translate-x-1 transition-transform duration-300">
-                {experience.label}
-              </div>
-              <ChevronsRight className="text-[#224]/70 w-8 h-8" />
-            </Link>
-            ;
-          </button>
+            <ChevronsRight className="text-[#224]/70 w-8 h-8" />
+          </Link>
         );
       default:
         null;
@@ -163,7 +193,7 @@ function SubscribedExperiencesList({
             opacity: 0,
           }}
         >
-          {renderViewMode(experience, viewMode)}
+          {renderViewMode(experience, viewMode, onRemove)}
         </div>
       ))}
     </div>
@@ -177,6 +207,11 @@ export default function ExperienceListManager() {
     Array<Experience>
   >([]);
 
+  const deleteExperience = (experienceID: number) => {
+    setSubscribedExperiences(
+      subscribedExperiences.filter((exp) => exp.id !== experienceID),
+    );
+  };
   const addExperience = (experience: Experience) => {
     if (!subscribedExperiences.find((i) => i?.id === experience.id)) {
       setSubscribedExperiences([...subscribedExperiences, experience]);
@@ -210,7 +245,9 @@ export default function ExperienceListManager() {
         <div className="self-start">
           <Menu.Root>
             <Menu.Trigger>
-              <Ellipses />
+              <div className="cursor-pointer">
+                <Ellipses />
+              </div>
             </Menu.Trigger>
             <Menu.Portal>
               <Menu.Positioner className="outline-none" sideOffset={8}>
@@ -245,6 +282,7 @@ export default function ExperienceListManager() {
       <SubscribedExperiencesList
         subscribedExperiences={subscribedExperiences}
         viewMode={viewMode}
+        onRemove={(id: number) => deleteExperience(id)}
       />
 
       {viewMode === 'remove' && (
@@ -254,7 +292,7 @@ export default function ExperienceListManager() {
         >
           <button
             onClick={() => setViewMode('show')}
-            className=" animate-fade-in mt-4 px-8 py-4 bg-transparent backdrop-blur-md border-2 border-[#1a1a1a]/30 rounded-2xl overflow-hidden transition-all duration-500 hover:border-[#1a1a1a]/50 active:scale-95 hover:shadow-2xl hover:shadow-[#1a1a1a]/10"
+            className=" cursor-pointer animate-fade-in mt-4 px-8 py-4 bg-transparent backdrop-blur-md border-2 border-[#1a1a1a]/30 rounded-2xl overflow-hidden transition-all duration-500 hover:border-[#1a1a1a]/50 active:scale-95 hover:shadow-2xl hover:shadow-[#1a1a1a]/10"
           >
             <span className=" z-10 text-lg font-semibold tracking-wide text-[#224]/80 group-hover:text-[#1a1a1a] transition-colors duration-300">
               Done
