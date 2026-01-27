@@ -41,7 +41,10 @@ const allPossibleExperiences: Array<Experience> = [
   },
 ];
 
-function ExperienceSelector({
+/**
+ * @returns Displays list of not yet subscribed to experiences to select from
+ */
+function NotSubscribedExperiencesSelector({
   notSubscribedExperiences,
   addExperience,
   onClose,
@@ -103,6 +106,9 @@ function ExperienceSelector({
   );
 }
 
+/**
+ * @returns If the view mode is show then it displays a list of subscribed experiences to initialize. If the view mode is remove then it allows you to delete that experience
+ */
 function SubscribedExperiencesList({
   subscribedExperiences,
   viewMode,
@@ -273,7 +279,7 @@ export default function ExperienceListManager() {
       </div>
 
       {isOpen && (
-        <ExperienceSelector
+        <NotSubscribedExperiencesSelector
           addExperience={addExperience}
           notSubscribedExperiences={notSubscribedExperiences}
           onClose={() => setIsOpen(false)}
