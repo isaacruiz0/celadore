@@ -1,10 +1,10 @@
 import { Link } from '@tanstack/react-router';
 
-export default function FadeInHero() {
+export default function Hero() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-[#F2D5A6] via-white to-[#F2D5A6]">
       <div className="flex flex-col gap-1 items-center">
-        <h1 className="text-center text-6xl font-bold text-[#224] animate-fade-in antialiased">
+        <h1 className="pointer-none text-center text-6xl font-bold text-[#224] animate-fade-in antialiased">
           Celadore
         </h1>
         <p className="text-center text-sm w-60 text-[#224] animate-fade-in-delayed antialiased">
