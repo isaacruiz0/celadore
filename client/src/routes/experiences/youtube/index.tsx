@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+import ThemeListManager from '@/ui/features/ThemeListManager';
 
 export const Route = createFileRoute('/experiences/youtube/')({
   component: Youtube,
@@ -10,6 +11,9 @@ function Youtube() {
       <h1 className="text-center text-3xl font-bold text-[#224] animate-fade-in antialiased">
         Youtube
       </h1>
+      <div className="mt-5 w-full">
+        <ThemeListManager />
+      </div>
     </div>
   );
 }
