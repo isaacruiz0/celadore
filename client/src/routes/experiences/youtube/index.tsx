@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import ThemeListManager from '@/ui/features/ThemeListManager';
+import ThemeListManager from '@/ui/features/ListManagers/ThemeListManager';
 
 export const Route = createFileRoute('/experiences/youtube/')({
   component: Youtube,

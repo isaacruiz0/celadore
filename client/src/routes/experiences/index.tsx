@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import ExperienceListManager from '@/ui/features/ExperienceListManager/index';
+import ExperienceListManager from '@/ui/features/ListManagers/ExperienceListManager/index';
 
 export const Route = createFileRoute('/experiences/')({
   component: Experiences,
