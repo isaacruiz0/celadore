@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { AlertDialog } from '@base-ui/react/alert-dialog';
 import { SquarePlus, SquareMinus, ChevronsRight, XIcon } from 'lucide-react';
-import Ellipses from '@/ui/markup/Ellipses';
-import './styles.css';
 import { Link } from '@tanstack/react-router';
-import { Menu } from '@base-ui/react/menu';
 import type { Theme, ViewMode } from './types';
+import ListManagerHeader from '../ListManagerHeader';
 
 /**
  * @returns If the view mode is show then it displays a list of themes to select from. If the view mode is remove then it allows you to delete that theme
@@ -70,7 +68,7 @@ function MyThemesList({
       case 'show':
         return (
           <Link
-            to={'/experiences/youtube'}
+            to={theme.href}
             className="flex justify-between items-center px-6 py-8 bg-transparent backdrop-blur-md text-3xl text-[#224] border-b-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
             style={{
               boxShadow:
@@ -132,45 +130,16 @@ export default function ThemeListManager() {
     setThemeList(themeList.filter((theme) => theme.id !== themeId));
   }
   function addTheme(name: string) {
-    setThemeList([...themeList, { label: name, id: Math.random() }]);
+    setThemeList([
+      ...themeList,
+      { label: name, id: Math.random(), href: '/experiences/youtube' },
+    ]);
     setShowAddThemeDialog(false);
   }
 
   return (
     <div className="w-full">
-      <div className="w-full animate-fade-in px-6 py-4 bg-transparent backdrop-blur-md flex items-center justify-between border-x-0 border-2 border-[#1a1a1a]/20">
-        <div className="text-left relative">
-          <div className="font-semibold text-2xl text-[#224]">Themes</div>
-        </div>
-        <div className="self-start">
-          <Menu.Root>
-            <Menu.Trigger>
-              <div className="cursor-pointer">
-                <Ellipses />
-              </div>
-            </Menu.Trigger>
-            <Menu.Portal>
-              <Menu.Positioner className="outline-none" sideOffset={8}>
-                <Menu.Popup className="`origin-(--transform-origin rounded-md bg-white py-1 text-[#224] shadow-lg shadow-gray-200 outline-1 outline-gray-200 transition-[transform,scale,opacity] data-ending-style:scale-90 data-ending-style:opacity-0 data-starting-style:scale-90 data-starting-style:opacity-0 dark:shadow-none dark:-outline-offset-1 dark:outline-gray-300">
-                  {menuItems.map((menuItem) => {
-                    const Icon = menuItem.icon;
-
-                    return (
-                      <Menu.Item
-                        onClick={menuItem.onClick}
-                        className="flex gap-1 items-center cursor-pointer py-2 pr-8 pl-4 text-sm leading-4 outline-none select-none data-highlighted:relative data-highlighted:z-0 data-highlighted:text-gray-50 data-highlighted:before:absolute data-highlighted:before:inset-x-1 data-highlighted:before:inset-y-0 data-highlighted:before:z-[-1] data-highlighted:before:rounded-sm data-highlighted:before:bg-[#224]"
-                      >
-                        <span className="text-lg">{menuItem.label}</span>
-                        <Icon className="h-4 w-4" />
-                      </Menu.Item>
-                    );
-                  })}
-                </Menu.Popup>
-              </Menu.Positioner>
-            </Menu.Portal>
-          </Menu.Root>
-        </div>
-      </div>
+      <ListManagerHeader menuItems={menuItems} title="Themes" />
       <MyThemesList
         myThemes={themeList}
         viewMode={viewMode}
@@ -208,12 +177,12 @@ export default function ThemeListManager() {
               <input
                 required
                 className="my-4 h-fit w-full rounded-md border border-gray-200 px-3.5 py-2 text-base text-gray-900 focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800"
-                placeholder="Label your theme feed"
+                placeholder="Name your feed theme"
                 onChange={(event) =>
                   setCreateThemeInputValue(event.target.value)
                 }
               />
-              <div className="flex justify-start gap-4">
+              <div className="flex justify-end gap-4">
                 <AlertDialog.Close
                   onClick={() => setShowAddThemeDialog(false)}
                   className="cursor-pointer flex h-10 items-center justify-center rounded-md border border-gray-200 bg-gray-50 px-3.5 text-base font-medium text-gray-900 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100"
