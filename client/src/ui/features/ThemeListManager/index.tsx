@@ -56,7 +56,7 @@ function MyThemesList({
                     </AlertDialog.Close>
                     <AlertDialog.Close
                       onClick={() => onRemove(theme.id)}
-                      className="cursor-pointer flex h-10 items-center justify-center rounded-md border border-gray-200 bg-gray-50 px-3.5 text-base font-medium text-red-800 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100"
+                      className="cursor-pointer flex h-10 items-center justify-center rounded-md border border-red-200 bg-red-50 px-3.5 text-base font-medium text-red-800 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100"
                     >
                       Delete
                     </AlertDialog.Close>
