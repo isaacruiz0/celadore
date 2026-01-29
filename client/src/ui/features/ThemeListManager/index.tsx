@@ -214,21 +214,20 @@ export default function ThemeListManager() {
                   setCreateThemeInputValue(event.target.value)
                 }
               />
+              <div className="flex justify-start gap-4">
+                <AlertDialog.Close
+                  onClick={() => setShowAddThemeDialog(false)}
+                  className="cursor-pointer flex h-10 items-center justify-center rounded-md border border-gray-200 bg-gray-50 px-3.5 text-base font-medium text-gray-900 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100"
+                >
+                  Cancel
+                </AlertDialog.Close>
+                <input
+                  type="submit"
+                  className="cursor-pointer flex h-10 items-center justify-center rounded-md border border-blue-200 bg-blue-50 px-3.5 text-base font-medium text-blue-700 select-none hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-600 active:bg-blue-100"
+                  value="Create"
+                />
+              </div>
             </form>
-            <div className="flex justify-start gap-4">
-              <AlertDialog.Close
-                onClick={() => setShowAddThemeDialog(false)}
-                className="cursor-pointer flex h-10 items-center justify-center rounded-md border border-gray-200 bg-gray-50 px-3.5 text-base font-medium text-gray-900 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100"
-              >
-                Cancel
-              </AlertDialog.Close>
-              <button
-                type="submit"
-                className="cursor-pointer flex h-10 items-center justify-center rounded-md border border-blue-200 bg-blue-50 px-3.5 text-base font-medium text-blue-700 select-none hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-600 active:bg-blue-100"
-              >
-                Create
-              </button>
-            </div>
           </AlertDialog.Popup>
         </AlertDialog.Portal>
       </AlertDialog.Root>
