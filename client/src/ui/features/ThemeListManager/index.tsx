@@ -130,7 +130,6 @@ export default function ThemeListManager() {
   // Event Handlers
   function deleteTheme(themeId: number) {
     setThemeList(themeList.filter((theme) => theme.id !== themeId));
-    setViewMode('show');
   }
   function addTheme(name: string) {
     setThemeList([...themeList, { label: name, id: Math.random() }]);
