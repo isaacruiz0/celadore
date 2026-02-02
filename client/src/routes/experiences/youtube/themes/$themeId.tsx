@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import ListManagerHeader from '@/ui/features/ListManagers/ListManagerHeader';
-import { SquarePlus, SquareMinus, CalendarDays } from 'lucide-react';
+import { SquarePlus, CalendarDays } from 'lucide-react';
 
 export const Route = createFileRoute('/experiences/youtube/themes/$themeId')({
   component: FeedTheme,
@@ -10,15 +10,11 @@ function FeedTheme() {
   const { themeId } = Route.useParams();
   const menuItems = [
     {
-      label: 'Add channel',
+      label: 'Channels',
       icon: SquarePlus,
-      onClick: () => console.log('adding channel'),
+      onClick: () => console.log('managing channel'),
     },
-    {
-      label: 'Remove channel',
-      icon: SquareMinus,
-      onClick: () => console.log('remove channel'),
-    },
+
     {
       label: 'Adjust frequency',
       icon: CalendarDays,
