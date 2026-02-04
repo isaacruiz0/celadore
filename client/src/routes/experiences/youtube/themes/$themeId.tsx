@@ -47,10 +47,15 @@ function FeedTheme() {
             <div className="flex items-center gap-0 mb-4">
               <input
                 placeholder="Add @channel"
-                className="h-fit w-full rounded-l-md border-2 border-[#1a1a1a]/20 px-3.5 py-2 text-base text-gray-900 focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800"
+                className="h-10 w-full rounded-l-md border-2 border-[#1a1a1a]/20 px-3.5 py-2 text-base text-gray-900 focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800"
               />
-              <div className="cursor-pointer transition-bg duration-100 hover:bg-[#224]/10 active:bg-[#224]/10 border-l-0 border-2 border-[#1a1a1a]/20 py-2 px-3.5 rounded-r-md hover:bg-">
-                <Search className="text-base opacity-70" color="#1a1a1a" />
+              <div className="h-10 flex items-center justify-center cursor-pointer transition-bg duration-100 hover:bg-[#224]/10 active:bg-[#224]/10 border-l-0 border-2 border-[#1a1a1a]/20 py-2 px-3.5 rounded-r-md hover:bg-">
+                <Search
+                  width={20}
+                  height={20}
+                  className="opacity-70"
+                  color="#1a1a1a"
+                />
               </div>
             </div>
             <ChannelsListManager
