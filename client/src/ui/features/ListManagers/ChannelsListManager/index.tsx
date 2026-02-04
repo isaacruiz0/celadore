@@ -9,6 +9,6 @@ function ChannelsList({ channels }: { channels: Channel[] }) {
     </div>
   ));
 }
-export default function ChannelsManager() {
+export default function ChannelsListManager() {
   return <ChannelsList channels={channelData} />;
 }
