@@ -4,6 +4,8 @@ import { SquarePlus, CalendarDays, Search } from 'lucide-react';
 import { Dialog } from '@base-ui/react/dialog';
 import { useState } from 'react';
 import ChannelsListManager from '@/ui/features/ListManagers/ChannelsListManager';
+import { channelData } from './data';
+import type { Channel } from '@/ui/features/ListManagers/ChannelsListManager/types';
 
 export const Route = createFileRoute('/experiences/youtube/themes/$themeId')({
   component: FeedTheme,
@@ -12,6 +14,7 @@ export const Route = createFileRoute('/experiences/youtube/themes/$themeId')({
 function FeedTheme() {
   const [showChannelListManagerDialog, setShowChannelListManagerDialog] =
     useState<boolean>(false);
+  const [channels, setChannels] = useState<Channel[]>(channelData);
   const { themeId } = Route.useParams();
   const menuItems = [
     {
@@ -50,13 +53,26 @@ function FeedTheme() {
                 <Search className="text-base opacity-70" color="#1a1a1a" />
               </div>
             </div>
-            <ChannelsListManager />
+            <ChannelsListManager
+              channelsData={channels}
+              handleChannels={setChannels}
+            />
             <div className="flex justify-end gap-4 mt-4">
-              <Dialog.Close className="cursor-pointer flex h-10 items-center justify-center rounded-md border border-gray-200 bg-gray-50 px-3.5 text-base font-medium text-gray-900 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100">
+              <Dialog.Close
+                onClick={() => setShowChannelListManagerDialog(false)}
+                className="cursor-pointer flex h-10 items-center justify-center rounded-md border border-gray-200 bg-gray-50 px-3.5 text-base font-medium text-gray-900 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100"
+              >
                 Cancel
               </Dialog.Close>
               <Dialog.Close className="cursor-pointer flex h-10 items-center justify-center rounded-md border border-blue-200 bg-blue-50 px-3.5 text-base font-medium text-blue-700 select-none hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-600 active:bg-blue-100">
-                <input type="submit" value="Save" />
+                <button
+                  onClick={() => {
+                    console.log(channels);
+                    setShowChannelListManagerDialog(false);
+                  }}
+                >
+                  Save
+                </button>
               </Dialog.Close>
             </div>
           </Dialog.Popup>

@@ -1,5 +1,4 @@
 import type { Channel } from './types';
-import { channelData } from './data';
 import { Minus } from 'lucide-react';
 import { AlertDialog } from '@base-ui/react/alert-dialog';
 import { useState } from 'react';
@@ -68,9 +67,14 @@ function ChannelsList({
     <ChannelPill channel={channel} onRemove={onRemove} />
   ));
 }
-export default function ChannelsListManager() {
-  const [channels, setChannels] = useState<Channel[]>(channelData);
+export default function ChannelsListManager({
+  channelsData,
+  handleChannels,
+}: {
+  channelsData: Channel[];
+  handleChannels: (channel: Channel[]) => void;
+}) {
   const onRemove = (id: Channel['id']) =>
-    setChannels(channels.filter((channel) => channel.id !== id));
-  return <ChannelsList channels={channels} onRemove={onRemove} />;
+    handleChannels(channelsData.filter((channel) => channel.id !== id));
+  return <ChannelsList channels={channelsData} onRemove={onRemove} />;
 }
