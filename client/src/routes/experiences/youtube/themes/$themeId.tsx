@@ -41,7 +41,7 @@ function FeedTheme() {
             <Dialog.Title className="-mt-1.5 mb-1 text-lg font-medium">
               Channels
             </Dialog.Title>
-            <div className="flex items-center gap-0">
+            <div className="flex items-center gap-0 mb-4">
               <input
                 placeholder="Add @channel"
                 className="h-fit w-full rounded-l-md border-2 border-[#1a1a1a]/20 px-3.5 py-2 text-base text-gray-900 focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800"
