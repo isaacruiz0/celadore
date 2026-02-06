@@ -20,13 +20,17 @@ function ChannelPill({
       }}
     >
       <div className="flex gap-2 items-center">
-        <img src={channel.profilePictureURL} className="w-8 h-8 rounded-4xl" />
+        <img
+          src={channel.profilePictureURL}
+          alt="Youtube profile picture"
+          className="w-8 h-8 rounded-4xl"
+        />
         <p className="text-sm">{channel.name}</p>
       </div>
 
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Minus width={10} height={10} className="cursor-pointer" />
+          <Minus width={20} height={20} className="cursor-pointer opacity-70" />
         </AlertDialog.Trigger>
         <AlertDialog.Portal>
           <AlertDialog.Backdrop className="fixed inset-0 min-h-dvh bg-black opacity-20 transition-all duration-150 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 dark:opacity-70 supports-[-webkit-touch-callout:none]:absolute" />
