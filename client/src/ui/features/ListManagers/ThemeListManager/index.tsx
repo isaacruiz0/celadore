@@ -68,7 +68,7 @@ function MyThemesList({
       case 'show':
         return (
           <Link
-            to={theme.href}
+            to={theme.href + theme.label}
             className="flex justify-between items-center px-6 py-8 bg-transparent backdrop-blur-md text-3xl text-[#224] border-b-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
             style={{
               boxShadow:
@@ -132,7 +132,7 @@ export default function ThemeListManager() {
   function addTheme(name: string) {
     setThemeList([
       ...themeList,
-      { label: name, id: Math.random(), href: '/experiences/youtube' },
+      { label: name, id: Math.random(), href: '/experiences/youtube/themes/' },
     ]);
     setShowAddThemeDialog(false);
   }
