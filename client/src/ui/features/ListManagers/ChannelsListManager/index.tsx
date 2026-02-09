@@ -67,7 +67,7 @@ function ChannelsList({
   onRemove: (id: Channel['id']) => void;
 }) {
   return channels.map((channel) => (
-    <ChannelPill channel={channel} onRemove={onRemove} />
+    <ChannelPill key={channel.id} channel={channel} onRemove={onRemove} />
   ));
 }
 export default function ChannelsListManager({

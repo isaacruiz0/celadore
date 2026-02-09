@@ -62,15 +62,13 @@ function FeedTheme() {
               >
                 Cancel
               </Dialog.Close>
-              <Dialog.Close className="cursor-pointer flex h-10 items-center justify-center rounded-md border border-blue-200 bg-blue-50 px-3.5 text-base font-medium text-blue-700 select-none hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-600 active:bg-blue-100">
-                <button
-                  className="cursor-pointer"
-                  onClick={() => {
-                    setShowChannelListManagerDialog(false);
-                  }}
-                >
-                  Save
-                </button>
+              <Dialog.Close
+                onClick={() => {
+                  setShowChannelListManagerDialog(false);
+                }}
+                className="cursor-pointer flex h-10 items-center justify-center rounded-md border border-blue-200 bg-blue-50 px-3.5 text-base font-medium text-blue-700 select-none hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-600 active:bg-blue-100"
+              >
+                Save
               </Dialog.Close>
             </div>
           </Dialog.Popup>
