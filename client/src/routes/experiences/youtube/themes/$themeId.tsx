@@ -5,7 +5,7 @@ import { Dialog } from '@base-ui/react/dialog';
 import { useState } from 'react';
 import ChannelsListManager from '@/ui/features/ListManagers/ChannelsListManager';
 import ChannelSearchBar from '@/ui/features/ChannelSearchBar';
-import type { Channel } from '@/ui/features/ListManagers/ChannelsListManager/types';
+import type { Channel } from '../../../../../../shared/types/channel';
 
 export const Route = createFileRoute('/experiences/youtube/themes/$themeId')({
   component: FeedTheme,

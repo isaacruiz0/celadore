@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { SquarePlus, Search } from 'lucide-react';
 import { channelData } from '@/routes/experiences/youtube/themes/data';
-import type { Channel } from '../ListManagers/ChannelsListManager/types';
+import type { Channel } from '../../../../../shared/types/channel';
 
 function ChannelSearchBar({
   addHandler,

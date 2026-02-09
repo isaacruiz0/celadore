@@ -1,4 +1,4 @@
-import type { Channel } from './types';
+import type { Channel } from '../../../../../../shared/types/channel';
 import { Minus } from 'lucide-react';
 import { AlertDialog } from '@base-ui/react/alert-dialog';
 
