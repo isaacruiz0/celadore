@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import youtube from "./routers/youtube";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +13,7 @@ app.use(express.json());
 
 const clientDistPath = path.join(__dirname, "../../client/dist");
 app.use(express.static(clientDistPath));
+app.use("/youtube", youtube);
 
 // SPA fallback
 app.all("*", (req: Request, res: Response) => {
