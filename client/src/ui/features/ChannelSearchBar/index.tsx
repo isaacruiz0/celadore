@@ -2,21 +2,58 @@ import { useState } from 'react';
 import { SquarePlus, Search, LoaderCircle } from 'lucide-react';
 import type { Channel } from '../../../../../shared/types/channel';
 import channelService from '@/model/youtube/channels/index';
+import type { ViewMode } from './types';
+
+function SearchButton({
+  viewMode,
+  handleSearch,
+}: {
+  viewMode: ViewMode;
+  handleSearch: () => void;
+}) {
+  function renderIcon(viewMode: ViewMode) {
+    switch (viewMode) {
+      case 'default':
+        return (
+          <Search
+            width={20}
+            height={20}
+            className="opacity-70"
+            color="#1a1a1a"
+          />
+        );
+      case 'searching':
+        return (
+          <LoaderCircle
+            width={20}
+            height={20}
+            className="opacity-70 animate-spin"
+            color="#1a1a1a"
+          />
+        );
+    }
+  }
+  return (
+    <button
+      onClick={handleSearch}
+      className="h-10 flex items-center justify-center cursor-pointer transition-bg duration-100 hover:bg-[#224]/10 active:bg-[#224]/10 border-l-0 border-2 border-[#1a1a1a]/20 py-2 px-3.5 rounded-r-md hover:bg-"
+    >
+      {renderIcon(viewMode)}
+    </button>
+  );
+}
 
 function ChannelSearchBar({
   addHandler,
 }: {
   addHandler: (channel: Channel) => void;
 }) {
-  const [searchingChannel, setSearchingChannel] = useState<boolean>(false);
+  const [viewMode, setViewMode] = useState<ViewMode>('default');
   const [searchChannelInput, setSearchChannelInput] = useState<string>('');
   const [searchedChannel, setSearchedChannel] = useState<Channel | null>(null);
 
-  function renderPopUnder(
-    searchingChannel: boolean,
-    searchedChannel: Channel | null,
-  ) {
-    if (searchingChannel) {
+  function renderPopUnder(viewMode: ViewMode, searchedChannel: Channel | null) {
+    if (viewMode === 'searching') {
       return (
         <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto z-10">
           <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
@@ -51,9 +88,9 @@ function ChannelSearchBar({
   }
 
   async function searchChannel(channelUsername: string) {
-    setSearchingChannel(true);
+    setViewMode('searching');
     const searchedChannel = await channelService.get(channelUsername);
-    setSearchingChannel(false);
+    setViewMode('default');
     setSearchedChannel(searchedChannel);
   }
 
@@ -65,27 +102,11 @@ function ChannelSearchBar({
         onInput={(e) => setSearchChannelInput(e.currentTarget.value)}
         value={searchChannelInput}
       />
-      <button
-        onClick={() => searchChannel(searchChannelInput)}
-        className="h-10 flex items-center justify-center cursor-pointer transition-bg duration-100 hover:bg-[#224]/10 active:bg-[#224]/10 border-l-0 border-2 border-[#1a1a1a]/20 py-2 px-3.5 rounded-r-md hover:bg-"
-      >
-        {!searchingChannel ? (
-          <Search
-            width={20}
-            height={20}
-            className="opacity-70"
-            color="#1a1a1a"
-          />
-        ) : (
-          <LoaderCircle
-            width={20}
-            height={20}
-            className="opacity-70 animate-spin"
-            color="#1a1a1a"
-          />
-        )}
-      </button>
-      {renderPopUnder(searchingChannel, searchedChannel)}
+      <SearchButton
+        handleSearch={() => searchChannel(searchChannelInput)}
+        viewMode={viewMode}
+      />
+      {renderPopUnder(viewMode, searchedChannel)}
     </div>
   );
 }
