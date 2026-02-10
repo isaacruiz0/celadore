@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { SquarePlus, Search } from 'lucide-react';
-import { channelData } from '@/routes/experiences/youtube/themes/data';
 import type { Channel } from '../../../../../shared/types/channel';
+import channelService from '@/model/youtube/channels/index';
 
 function ChannelSearchBar({
   addHandler,
@@ -50,16 +50,11 @@ function ChannelSearchBar({
     }
   }
 
-  function searchChannel(
-    channelUsername: string,
-    channelList: Channel[],
-  ): Channel | null {
+  async function searchChannel(channelUsername: string) {
     setSearchingChannel(true);
-    const searchedChannel =
-      channelList.find((channel) => channel.username === channelUsername) ||
-      null;
+    const searchedChannel = await channelService.get(channelUsername);
     setSearchingChannel(false);
-    return searchedChannel;
+    setSearchedChannel(searchedChannel);
   }
 
   return (
@@ -71,9 +66,7 @@ function ChannelSearchBar({
         value={searchChannelInput}
       />
       <button
-        onClick={() =>
-          setSearchedChannel(searchChannel(searchChannelInput, channelData))
-        }
+        onClick={() => searchChannel(searchChannelInput)}
         className="h-10 flex items-center justify-center cursor-pointer transition-bg duration-100 hover:bg-[#224]/10 active:bg-[#224]/10 border-l-0 border-2 border-[#1a1a1a]/20 py-2 px-3.5 rounded-r-md hover:bg-"
       >
         <Search width={20} height={20} className="opacity-70" color="#1a1a1a" />

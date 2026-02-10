@@ -3,6 +3,7 @@ import type { Channel } from "../../../shared/types/channel";
 const router = express.Router();
 
 router.get("/channels/:channelId", (req: Request, res: Response) => {
+  console.log("RAN GET FOR YOUTUBE");
   const channel: Channel = {
     profilePictureURL: "/temp-spyridon.jpg",
     name: "Father Spyridon",

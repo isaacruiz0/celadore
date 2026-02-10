@@ -13,7 +13,7 @@ app.use(express.json());
 
 const clientDistPath = path.join(__dirname, "../../client/dist");
 app.use(express.static(clientDistPath));
-app.use("/youtube", youtube);
+app.use("/api/youtube", youtube);
 
 // SPA fallback
 app.all("*", (req: Request, res: Response) => {
