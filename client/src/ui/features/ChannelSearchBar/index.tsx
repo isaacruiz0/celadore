@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SquarePlus, Search } from 'lucide-react';
+import { SquarePlus, Search, LoaderCircle } from 'lucide-react';
 import type { Channel } from '../../../../../shared/types/channel';
 import channelService from '@/model/youtube/channels/index';
 
@@ -19,7 +19,7 @@ function ChannelSearchBar({
     if (searchingChannel) {
       return (
         <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto z-10">
-          <div className="p-2 hover:bg-gray-100 cursor-pointer">
+          <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
             Searching for @{searchChannelInput}
           </div>
         </div>
@@ -69,7 +69,21 @@ function ChannelSearchBar({
         onClick={() => searchChannel(searchChannelInput)}
         className="h-10 flex items-center justify-center cursor-pointer transition-bg duration-100 hover:bg-[#224]/10 active:bg-[#224]/10 border-l-0 border-2 border-[#1a1a1a]/20 py-2 px-3.5 rounded-r-md hover:bg-"
       >
-        <Search width={20} height={20} className="opacity-70" color="#1a1a1a" />
+        {!searchingChannel ? (
+          <Search
+            width={20}
+            height={20}
+            className="opacity-70"
+            color="#1a1a1a"
+          />
+        ) : (
+          <LoaderCircle
+            width={20}
+            height={20}
+            className="opacity-70 animate-spin"
+            color="#1a1a1a"
+          />
+        )}
       </button>
       {renderPopUnder(searchingChannel, searchedChannel)}
     </div>
