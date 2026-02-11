@@ -32,17 +32,17 @@ router.get(basePath, async (req: Request, res: Response) => {
 
     channel = ChannelSchema.parse({ name, profilePictureURL, id, username });
   } catch (err) {
-    if (err instanceof Error) {
-      console.log("Getting channel failed, error: " + err.message);
-    }
     if (err instanceof z.ZodError) {
       console.log("Zod errors: " + err.issues);
     }
+    if (err instanceof Error) {
+      console.log("Getting channel failed, error: " + err.message);
+    }
 
-    res.status(400).end();
+    return res.status(400).end();
   }
 
-  res.status(200).send(channel);
+  return res.status(200).send(channel);
 });
 
 const temp = {
