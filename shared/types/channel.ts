@@ -1,6 +1,6 @@
 export interface Channel {
   name: string;
   profilePictureURL: string;
-  id: number;
+  id: string;
   username: string;
 }
