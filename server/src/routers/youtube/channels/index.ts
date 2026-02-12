@@ -45,45 +45,4 @@ router.get(basePath, async (req: Request, res: Response) => {
   return res.status(200).send(channel);
 });
 
-const temp = {
-  kind: "youtube#channelListResponse",
-  etag: "rzEmbLQYmgkkqOwFyPlwpRqEO6w",
-  pageInfo: { totalResults: 1, resultsPerPage: 5 },
-  items: [
-    {
-      kind: "youtube#channel",
-      etag: "kPPwwU7t9HDzhCkwU7bBZMP7op8",
-      id: "UCkpBmkoZ6yToHhB8uFDp46Q",
-      snippet: {
-        title: "Father Spyridon",
-        description: "Orthodox priest serving in ROCOR.",
-        customUrl: "@fatherspyridonrocor",
-        publishedAt: "2009-08-11T12:06:43Z",
-        thumbnails: {
-          default: {
-            url: "https://yt3.ggpht.com/ytc/AIdro_noH6sTnufRoyGA79VTVtRJzkpcbHenPv49dI3biL4ZKiE=s88-c-k-c0x00ffffff-no-rj",
-            width: 88,
-            height: 88,
-          },
-          medium: {
-            url: "https://yt3.ggpht.com/ytc/AIdro_noH6sTnufRoyGA79VTVtRJzkpcbHenPv49dI3biL4ZKiE=s240-c-k-c0x00ffffff-no-rj",
-            width: 240,
-            height: 240,
-          },
-          high: {
-            url: "https://yt3.ggpht.com/ytc/AIdro_noH6sTnufRoyGA79VTVtRJzkpcbHenPv49dI3biL4ZKiE=s800-c-k-c0x00ffffff-no-rj",
-            width: 800,
-            height: 800,
-          },
-        },
-        localized: {
-          title: "Father Spyridon",
-          description: "Orthodox priest serving in ROCOR.",
-        },
-        country: "GB",
-      },
-    },
-  ],
-};
-
 export default router;

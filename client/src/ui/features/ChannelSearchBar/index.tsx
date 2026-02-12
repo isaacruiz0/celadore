@@ -13,21 +13,21 @@ function SearchButton({
 }) {
   function renderIcon(viewMode: ViewMode) {
     switch (viewMode) {
-      case 'default':
-        return (
-          <Search
-            width={20}
-            height={20}
-            className="opacity-70"
-            color="#1a1a1a"
-          />
-        );
       case 'searching':
         return (
           <LoaderCircle
             width={20}
             height={20}
             className="opacity-70 animate-spin"
+            color="#1a1a1a"
+          />
+        );
+      default:
+        return (
+          <Search
+            width={20}
+            height={20}
+            className="opacity-70"
             color="#1a1a1a"
           />
         );
@@ -63,6 +63,16 @@ function ChannelSearchBar({
       );
     }
 
+    if (viewMode === 'notFound') {
+      return (
+        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto z-10">
+          <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+            Did not find @{searchChannelInput}
+          </div>
+        </div>
+      );
+    }
+
     if (searchedChannel) {
       return (
         <div className="px-4 py-2 absolute hover:bg-gray-100 cursor-pointer top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto z-10 flex justify-between items-center">
@@ -89,9 +99,15 @@ function ChannelSearchBar({
 
   async function searchChannel(channelUsername: string) {
     setViewMode('searching');
-    const searchedChannel = await channelService.get(channelUsername);
-    setViewMode('default');
-    setSearchedChannel(searchedChannel);
+    const res = await channelService.get(channelUsername);
+    if (res.status === 400) {
+      setViewMode('notFound');
+    } else if (res.status === 200) {
+      const fetchedChannel = await res.json();
+
+      setViewMode('default');
+      setSearchedChannel(fetchedChannel);
+    }
   }
 
   return (
@@ -99,7 +115,10 @@ function ChannelSearchBar({
       <input
         placeholder="Add @channel"
         className="h-10 w-full rounded-l-md border-2 border-[#1a1a1a]/20 px-3.5 py-2 text-base text-gray-900 focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800"
-        onInput={(e) => setSearchChannelInput(e.currentTarget.value)}
+        onInput={(e) => {
+          setViewMode('default');
+          setSearchChannelInput(e.currentTarget.value);
+        }}
         value={searchChannelInput}
       />
       <SearchButton

@@ -1,1 +1,1 @@
-export type ViewMode = 'searching' | 'default';
+export type ViewMode = 'searching' | 'default' | 'notFound';

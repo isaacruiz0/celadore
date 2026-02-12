@@ -1,11 +1,7 @@
-import type { Channel } from '../../../../../shared/types/channel';
-
 const pathname = '/api/youtube/channels';
-async function get(channelUsername: string): Promise<Channel> {
+async function get(channelUsername: string): Promise<Response> {
   const query = `?handle=${channelUsername}`;
-  const res: Channel = await fetch(`${pathname}${query}`).then((r) => r.json());
-
-  return res;
+  return fetch(`${pathname}${query}`);
 }
 
 export default { get };
