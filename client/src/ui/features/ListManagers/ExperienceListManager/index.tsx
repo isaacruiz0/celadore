@@ -23,7 +23,7 @@ const allPossibleExperiences: Array<Experience> = [
     id: 2,
     label: 'Reddit',
     href: '/experiences/reddit',
-    available: true,
+    available: false,
   },
   {
     id: 3,
