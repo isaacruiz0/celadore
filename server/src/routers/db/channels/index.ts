@@ -14,4 +14,12 @@ router.get(basePath, async (req: Request, res: Response) => {
   }
 });
 
+/**
+ * @description adds an array of channels to collection
+ */
+router.post(basePath, async (req: Request, res: Response) => {
+  const channels = req.body;
+  console.log(channels);
+});
+
 export default router;
