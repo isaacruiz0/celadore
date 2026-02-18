@@ -4,4 +4,15 @@ async function getAll(): Promise<Array<Channel>> {
   return await fetch(basePath).then((r) => r.json());
 }
 
-export default { getAll };
+async function addChannels(channels: Array<Channel>): Promise<Response> {
+  const res = await fetch(basePath, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(channels),
+  });
+  return res;
+}
+
+export default { getAll, addChannels };
