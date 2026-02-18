@@ -10,7 +10,6 @@ const ChannelSchema = new mongoose.Schema<Channel>({
 
 ChannelSchema.set("toJSON", {
   transform: (document, returnedObject) => {
-    console.log("runnin schema transformation ");
     // @ts-ignore;
     returnedObject.id = returnedObject._id.toString();
     // @ts-ignore;
