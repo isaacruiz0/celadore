@@ -1,22 +1,35 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { useEffect } from 'react';
 import ListManagerHeader from '@/ui/features/ListManagers/ListManagerHeader';
 import { SquarePlus, CalendarDays } from 'lucide-react';
 import { Dialog } from '@base-ui/react/dialog';
 import { useState } from 'react';
 import ChannelsListManager from '@/ui/features/ListManagers/ChannelsListManager';
 import ChannelSearchBar from '@/ui/features/ChannelSearchBar';
-import type { Channel } from '../../../../../../shared/types/channel';
+import type { Channel } from '../../../../../../shared/types/Schemas';
+import dbChannelModel from '@/model/db/channels/index';
 
 export const Route = createFileRoute('/experiences/youtube/themes/$themeId')({
   component: FeedTheme,
 });
-
+async function getAllChannels(setChannels: (channels: Array<Channel>) => void) {
+  try {
+    const channels = await dbChannelModel.getAll();
+    setChannels(channels);
+  } catch (err) {
+    console.log(err);
+  }
+}
 function FeedTheme() {
   const [showChannelListManagerDialog, setShowChannelListManagerDialog] =
     useState<boolean>(false);
   const [channels, setChannels] = useState<Channel[]>([]);
-
   const { themeId } = Route.useParams();
+
+  useEffect(() => {
+    getAllChannels(setChannels);
+  }, []);
+
   const menuItems = [
     {
       label: 'Channels',
@@ -32,6 +45,7 @@ function FeedTheme() {
   ];
 
   function addChannel(channel: Channel) {
+    // TODO: Make http req here
     setChannels([...channels, channel]);
   }
 

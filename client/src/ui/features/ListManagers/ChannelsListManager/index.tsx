@@ -1,4 +1,4 @@
-import type { Channel } from '../../../../../../shared/types/channel';
+import type { Channel } from '../../../../../../shared/types/Schemas';
 import { Minus } from 'lucide-react';
 import { AlertDialog } from '@base-ui/react/alert-dialog';
 
@@ -25,7 +25,7 @@ function ChannelPill({
           alt="Youtube profile picture"
           className="w-8 h-8 rounded-4xl"
         />
-        <p className="text-sm">{channel.name}</p>
+        <p className="text-sm">{channel.displayName}</p>
       </div>
 
       <AlertDialog.Root>

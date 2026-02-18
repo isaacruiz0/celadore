@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
-import type { Channel } from "../../../../../shared/types/channel";
+import type { Channel } from "../../../../../shared/types/Schemas";
 import { v6 as uuidv6 } from "uuid";
 import * as z from "zod";
 

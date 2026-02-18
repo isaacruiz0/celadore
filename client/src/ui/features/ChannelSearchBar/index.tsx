@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SquarePlus, Search, LoaderCircle } from 'lucide-react';
-import type { Channel } from '../../../../../shared/types/channel';
+import type { Channel } from '../../../../../shared/types/Schemas';
 import channelService from '@/model/youtube/channels/index';
 import type { ViewMode } from './types';
 
@@ -82,7 +82,7 @@ function ChannelSearchBar({
               alt="Youtube profile picture"
               className='"w-8 h-8 rounded-4xl'
             />
-            <p>@{searchedChannel.username}</p>
+            <p>@{searchedChannel.displayName}</p>
           </div>
           <SquarePlus
             onClick={() => {

@@ -1,20 +1,17 @@
 import express, { Request, Response } from "express";
-import dotenv from "dotenv";
-import type { Channel } from "../../../../../shared/types/channel";
-import * as z from "zod";
-
+import ChannelModel from "../../../models/Channel";
 const router = express.Router();
-dotenv.config();
 
 const basePath = "/db/channels";
 
 router.get(basePath, async (req: Request, res: Response) => {
   try {
+    const channels = await ChannelModel.find();
+    return res.status(200).send(channels);
   } catch (err) {
+    console.log("getting all channels from db failed");
     return res.status(400).end();
   }
-
-  return res.status(200).send();
 });
 
 export default router;

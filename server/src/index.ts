@@ -1,8 +1,11 @@
 import express, { Request, Response } from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-import youtubeChannels from "./routers/youtube/channels/index";
+import youtubeChannelsRouter from "./routers/youtube/channels/index";
+import dbChannelsRouter from "./routers/db/channels/index";
 import mongoose from "mongoose";
+// Delete after
+import ChannelModel from "./models/Channel";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,10 +23,11 @@ try {
   await mongoose.connect(uri);
   console.log("mongodb connected");
 } catch (err) {
-  console.log("error connecting to database");
+  console.log("error connecting to database", err);
 }
 
-app.use("/api", youtubeChannels);
+app.use("/api", youtubeChannelsRouter);
+app.use("/api", dbChannelsRouter);
 
 // SPA fallback
 app.all("*", (req: Request, res: Response) => {
