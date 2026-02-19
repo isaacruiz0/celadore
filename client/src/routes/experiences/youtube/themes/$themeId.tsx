@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import ListManagerHeader from '@/ui/features/ListManagers/ListManagerHeader';
-import { SquarePlus, CalendarDays } from 'lucide-react';
+import { SquarePlus, CalendarDays, LoaderCircle } from 'lucide-react';
 import { Dialog } from '@base-ui/react/dialog';
 import { useState } from 'react';
 import ChannelsListManager from '@/ui/features/ListManagers/ChannelsListManager';
@@ -24,6 +24,8 @@ function FeedTheme() {
   const [showChannelListManagerDialog, setShowChannelListManagerDialog] =
     useState<boolean>(false);
   const [channels, setChannels] = useState<Channel[]>([]);
+  const [newChannels, setNewChannels] = useState<Channel[]>([]);
+  const [savingNewChannels, setSavingNewChannels] = useState<boolean>(false);
   const { themeId } = Route.useParams();
 
   useEffect(() => {
@@ -45,8 +47,8 @@ function FeedTheme() {
   ];
 
   function addChannel(channel: Channel) {
-    // TODO: Make http req here
     setChannels([...channels, channel]);
+    setNewChannels([...newChannels, channel]);
   }
 
   return (
@@ -77,12 +79,33 @@ function FeedTheme() {
                 Cancel
               </Dialog.Close>
               <Dialog.Close
-                onClick={() => {
-                  setShowChannelListManagerDialog(false);
+                onClick={async () => {
+                  if (newChannels.length > 0) {
+                    setSavingNewChannels(true);
+                    const res = await dbChannelModel.addChannels(newChannels);
+                    if (res.status === 200) {
+                      // TODO: Show success toast
+                    } else {
+                      // TODO: Show failed toast
+                    }
+                    setSavingNewChannels(false);
+                  } else {
+                    setShowChannelListManagerDialog(false);
+                  }
                 }}
                 className="cursor-pointer flex h-10 items-center justify-center rounded-md border border-blue-200 bg-blue-50 px-3.5 text-base font-medium text-blue-700 select-none hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-600 active:bg-blue-100"
               >
-                Save
+                <div className="flex gap-2">
+                  <span>Save</span>
+                  {savingNewChannels && (
+                    <LoaderCircle
+                      width={20}
+                      height={20}
+                      className="opacity-70 animate-spin"
+                      color="#1a1a1a"
+                    />
+                  )}
+                </div>
               </Dialog.Close>
             </div>
           </Dialog.Popup>
