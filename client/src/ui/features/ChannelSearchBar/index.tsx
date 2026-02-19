@@ -82,7 +82,7 @@ function ChannelSearchBar({
               alt="Youtube profile picture"
               className='"w-8 h-8 rounded-4xl'
             />
-            <p>@{searchedChannel.displayName}</p>
+            <p>@{searchedChannel.username}</p>
           </div>
           <SquarePlus
             onClick={() => {

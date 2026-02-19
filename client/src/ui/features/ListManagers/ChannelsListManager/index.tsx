@@ -25,7 +25,7 @@ function ChannelPill({
           alt="Youtube profile picture"
           className="w-8 h-8 rounded-4xl"
         />
-        <p className="text-sm">{channel.displayName}</p>
+        <p className="text-sm">{channel.username}</p>
       </div>
 
       <AlertDialog.Root>
