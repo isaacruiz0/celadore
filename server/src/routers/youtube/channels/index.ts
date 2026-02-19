@@ -1,7 +1,6 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import type { Channel } from "../../../../../shared/types/Schemas";
-import { v6 as uuidv6 } from "uuid";
 import * as z from "zod";
 
 const router = express.Router();
@@ -11,10 +10,10 @@ const youtubeChannelAPI = "https://youtube.googleapis.com/youtube/v3/channels";
 const basePath = "/youtube/channels";
 
 const ChannelSchema = z.object({
-  name: z.string(),
-  profilePictureURL: z.string(),
-  id: z.uuid(),
-  username: z.string(),
+  profilePictureURL: z.coerce.string<string>(),
+  name: z.coerce.string<string>(),
+  username: z.coerce.string<string>(),
+  youtubeChannelId: z.coerce.string<string>(),
 });
 
 router.get(basePath, async (req: Request, res: Response) => {
@@ -25,12 +24,13 @@ router.get(basePath, async (req: Request, res: Response) => {
   try {
     const data = await fetch(targetAPI).then((r) => r.json());
     const fetchedChannel = data.items[0];
-    const name = fetchedChannel.snippet.title;
-    const id = uuidv6();
-    const profilePictureURL = fetchedChannel.snippet.thumbnails.default.url;
-    const username = handle;
-
-    channel = ChannelSchema.parse({ name, profilePictureURL, id, username });
+    const channelProps = {
+      name: fetchedChannel.snippet.title,
+      profilePictureURL: fetchedChannel.snippet.thumbnails.default.url,
+      username: handle,
+      youtubeChannelId: fetchedChannel.id,
+    };
+    channel = ChannelSchema.parse(channelProps);
   } catch (err) {
     if (err instanceof z.ZodError) {
       console.log("Zod errors: " + err.issues);

@@ -5,7 +5,6 @@ const ChannelSchema = new mongoose.Schema<Channel>({
   profilePictureURL: String,
   channelId: String,
   username: String,
-  displayName: String,
 });
 
 ChannelSchema.set("toJSON", {
