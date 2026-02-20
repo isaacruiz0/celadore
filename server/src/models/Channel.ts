@@ -2,9 +2,12 @@ import mongoose from "mongoose";
 import { Channel } from "../../../shared/types/Schemas";
 
 const ChannelSchema = new mongoose.Schema<Channel>({
+  id: String,
   profilePictureURL: String,
-  channelId: String,
+  youtubeChannelId: String,
   username: String,
+  userId: String,
+  categoryOwnerId: String,
 });
 
 ChannelSchema.set("toJSON", {
