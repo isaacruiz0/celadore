@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import { ObjectId } from "mongoose";
 import ChannelModel from "../../../models/Channel";
 const router = express.Router();
 
@@ -20,12 +21,27 @@ router.get(basePath, async (req: Request, res: Response) => {
 router.post(basePath, async (req: Request, res: Response) => {
   try {
     const channels = req.body;
-    const res1 = await ChannelModel.insertMany(channels);
-    console.log(res1);
+    await ChannelModel.insertMany(channels);
+    return res.status(200).end();
   } catch (err) {
     console.log("adding channels to collection failed", err);
   }
-  return res.status(200).end();
+  return res.status(400).end();
+});
+
+/**
+ * @description removes channel from collection
+ */
+router.delete(basePath, async (req: Request, res: Response) => {
+  const { id } = req.body;
+  try {
+    await ChannelModel.findByIdAndDelete(id);
+    return res.status(200).end();
+  } catch (err) {
+    console.log(`err deleting object with id: ${id}`, err);
+  }
+
+  return res.status(400).end();
 });
 
 export default router;

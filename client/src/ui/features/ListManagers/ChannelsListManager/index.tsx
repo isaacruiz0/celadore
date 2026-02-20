@@ -1,6 +1,7 @@
 import type { Channel } from '../../../../../../shared/types/Schemas';
 import { Minus } from 'lucide-react';
 import { AlertDialog } from '@base-ui/react/alert-dialog';
+import ChannelModel from '@/model/db/channels/index';
 
 function ChannelPill({
   channel,
@@ -77,7 +78,24 @@ export default function ChannelsListManager({
   channelsData: Channel[];
   handleChannels: (channel: Channel[]) => void;
 }) {
-  const onRemove = (id: Channel['id']) =>
-    handleChannels(channelsData.filter((channel) => channel.id !== id));
+  const onRemove = async (id: Channel['id']) => {
+    /**
+     * If the user just added a channel from a youtube channel search, it won't have
+     * an id since ids for channels are only generated once they're saved to the db
+     * and therefore undefined and we can just remove it and update UI, no need for db.
+     */
+    if (id === undefined) {
+      handleChannels(channelsData.filter((channel) => channel.id !== id));
+      return;
+    }
+    try {
+      await ChannelModel.deleteChannel(id);
+
+      handleChannels(channelsData.filter((channel) => channel.id !== id));
+    } catch (err) {
+      console.log('error removing Channel', err);
+    }
+  };
+
   return <ChannelsList channels={channelsData} onRemove={onRemove} />;
 }

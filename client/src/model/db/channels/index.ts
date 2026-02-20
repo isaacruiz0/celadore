@@ -15,4 +15,15 @@ async function addChannels(channels: Array<Channel>): Promise<Response> {
   return res;
 }
 
-export default { getAll, addChannels };
+async function deleteChannel(id: string) {
+  const res = await fetch(basePath, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id }),
+  });
+  return res;
+}
+
+export default { getAll, addChannels, deleteChannel };
