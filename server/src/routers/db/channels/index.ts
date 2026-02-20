@@ -9,7 +9,7 @@ router.get(basePath, async (req: Request, res: Response) => {
     const channels = await ChannelModel.find();
     return res.status(200).send(channels);
   } catch (err) {
-    console.log("getting all channels from db failed");
+    console.log("getting all channels from db failed", err);
     return res.status(400).end();
   }
 });
@@ -18,8 +18,14 @@ router.get(basePath, async (req: Request, res: Response) => {
  * @description adds an array of channels to collection
  */
 router.post(basePath, async (req: Request, res: Response) => {
-  const channels = req.body;
-  console.log(channels);
+  try {
+    const channels = req.body;
+    const res1 = await ChannelModel.insertMany(channels);
+    console.log(res1);
+  } catch (err) {
+    console.log("adding channels to collection failed", err);
+  }
+  return res.status(200).end();
 });
 
 export default router;

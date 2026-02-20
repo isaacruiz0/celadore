@@ -85,10 +85,12 @@ function FeedTheme() {
                     const res = await dbChannelModel.addChannels(newChannels);
                     if (res.status === 200) {
                       // TODO: Show success toast
+                      //
                     } else {
                       // TODO: Show failed toast
                     }
                     setSavingNewChannels(false);
+                    setShowChannelListManagerDialog(false);
                   } else {
                     setShowChannelListManagerDialog(false);
                   }
