@@ -242,7 +242,9 @@ export default function ExperienceListManager() {
 
   return (
     <div className="w-full">
-      <ListManagerHeader menuItems={menuItems} title="Experiences" />
+      <div className="animate-fade-in">
+        <ListManagerHeader menuItems={menuItems} title="Experiences" />
+      </div>
       {isOpen && (
         <NotSubscribedExperiencesSelector
           addExperience={addExperience}

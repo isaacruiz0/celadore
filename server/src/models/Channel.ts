@@ -7,7 +7,7 @@ const ChannelSchema = new mongoose.Schema<Channel>({
   youtubeChannelId: String,
   username: String,
   userId: String,
-  categoryOwnerId: String,
+  parentFeedThemeId: String,
 });
 
 ChannelSchema.set("toJSON", {

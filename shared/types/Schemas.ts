@@ -6,6 +6,13 @@ export interface Channel {
   username: string;
   // User that owns this data
   userId?: string;
-  // Category this channel is for
-  categoryOwnerId?: string;
+  // Theme this channel is for
+  parentFeedThemeId?: string;
+}
+
+export interface FeedTheme {
+  id: string;
+  name: string;
+  // In the case of themes within themes
+  parentFeedThemeId: string | null;
 }

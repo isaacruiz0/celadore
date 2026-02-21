@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import ListManagerHeader from '@/ui/features/ListManagers/ListManagerHeader';
 import { SquarePlus, CalendarDays, LoaderCircle } from 'lucide-react';
@@ -54,7 +54,9 @@ function FeedTheme() {
   return (
     <div className="min-h-screen bg-linear-to-br from-[#F2D5A6] via-white to-[#F2D5A6] py-10">
       <h1 className="text-center text-3xl font-bold text-[#224] antialiased">
-        Youtube
+        <Link className="cursor" to="/experiences/youtube">
+          Youtube
+        </Link>
       </h1>
       <div className="mt-5 w-full">
         <ListManagerHeader menuItems={menuItems} title={themeId} />

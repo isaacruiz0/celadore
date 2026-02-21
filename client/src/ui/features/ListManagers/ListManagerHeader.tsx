@@ -10,7 +10,7 @@ export default function ListManagerHeader({
   menuItems: MenuItem[];
 }) {
   return (
-    <div className="w-full animate-fade-in px-6 py-4 bg-transparent backdrop-blur-md flex items-center justify-between border-x-0 border-2 border-[#1a1a1a]/20">
+    <div className="w-full px-6 py-4 bg-transparent backdrop-blur-md flex items-center justify-between border-x-0 border-2 border-[#1a1a1a]/20">
       <div className="text-left relative">
         <div className="font-semibold text-2xl text-[#224]">{title}</div>
       </div>
