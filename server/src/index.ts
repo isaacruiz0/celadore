@@ -3,6 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import youtubeChannelsRouter from "./routers/youtube/channels/index";
 import dbChannelsRouter from "./routers/db/channels/index";
+import dbFeedThemesRouter from "./routers/db/themes/index";
 import mongoose from "mongoose";
 // Delete after
 import ChannelModel from "./models/Channel";
@@ -28,6 +29,7 @@ try {
 
 app.use("/api", youtubeChannelsRouter);
 app.use("/api", dbChannelsRouter);
+app.use("/api", dbFeedThemesRouter);
 
 // SPA fallback
 app.all("*", (req: Request, res: Response) => {

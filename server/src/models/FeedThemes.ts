@@ -1,11 +1,14 @@
 import mongoose from "mongoose";
 import { FeedTheme } from "../../../shared/types/Schemas";
 
-const FeedThemeSchema = new mongoose.Schema<FeedTheme>({
-  id: String,
-  name: String,
-  parentFeedThemeId: { type: String, default: null },
-});
+const FeedThemeSchema = new mongoose.Schema<FeedTheme>(
+  {
+    id: String,
+    name: String,
+    parentFeedThemeId: { type: String, default: null },
+  },
+  { collection: "feed_themes" },
+);
 
 FeedThemeSchema.set("toJSON", {
   transform: (document, returnedObject) => {

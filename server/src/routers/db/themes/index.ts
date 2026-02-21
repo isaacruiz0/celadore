@@ -1,5 +1,4 @@
 import express, { Request, Response } from "express";
-import { ObjectId } from "mongoose";
 import FeedThemesModel from "../../../models/FeedThemes";
 const router = express.Router();
 
@@ -16,3 +15,5 @@ router.post(basePath, async (req: Request, res: Response) => {
     return res.status(400).end();
   }
 });
+
+export default router;

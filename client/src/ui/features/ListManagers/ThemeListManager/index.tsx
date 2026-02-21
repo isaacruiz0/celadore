@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { LoaderCircle } from 'lucide-react';
 import { AlertDialog } from '@base-ui/react/alert-dialog';
 import { SquarePlus, SquareMinus, ChevronsRight, XIcon } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
-import type { Theme, ViewMode } from './types';
+import type { ViewMode } from './types';
 import ListManagerHeader from '../ListManagerHeader';
+import FeedThemeModel from '@/model/db/feedThemes/index';
+import type { FeedTheme } from '@/../../shared/types/Schemas';
 
 /**
  * @returns If the view mode is show then it displays a list of themes to select from. If the view mode is remove then it allows you to delete that theme
@@ -13,12 +16,12 @@ function MyThemesList({
   viewMode,
   onRemove,
 }: {
-  myThemes: Theme[];
+  myThemes: FeedTheme[];
   viewMode: ViewMode;
   onRemove: (themeId: number) => void;
 }) {
   const renderThemeItem = (
-    theme: Theme,
+    theme: FeedTheme,
     viewMode: ViewMode,
     onRemove: (themeId: number) => void,
   ) => {
@@ -33,7 +36,7 @@ function MyThemesList({
             }}
           >
             <div className="group-hover:translate-x-1 transition-transform duration-300">
-              {theme.label}
+              {theme.name}
             </div>
             <AlertDialog.Root>
               <AlertDialog.Trigger>
@@ -68,7 +71,7 @@ function MyThemesList({
       case 'show':
         return (
           <Link
-            to={theme.href + theme.label}
+            to={'/experiences/youtube/themes/' + theme.name + `?id=${theme.id}`}
             className="flex justify-between items-center px-6 py-8 bg-transparent backdrop-blur-md text-3xl text-[#224] border-b-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
             style={{
               boxShadow:
@@ -76,7 +79,7 @@ function MyThemesList({
             }}
           >
             <div className="group-hover:translate-x-1 transition-transform duration-300">
-              {theme.label}
+              {theme.name}
             </div>
             <ChevronsRight className="text-[#224]/70 w-8 h-8" />
           </Link>
@@ -111,6 +114,7 @@ export default function ThemeListManager() {
   const [showAddThemeDialog, setShowAddThemeDialog] = useState<boolean>(false);
   const [createThemeInputValue, setCreateThemeInputValue] =
     useState<string>('');
+  const [savingTheme, setSavingTheme] = useState<boolean>(false);
 
   const menuItems = [
     {
@@ -129,12 +133,18 @@ export default function ThemeListManager() {
   function deleteTheme(themeId: number) {
     setThemeList(themeList.filter((theme) => theme.id !== themeId));
   }
-  function addTheme(name: string) {
-    setThemeList([
-      ...themeList,
-      { label: name, id: Math.random(), href: '/experiences/youtube/themes/' },
-    ]);
-    setShowAddThemeDialog(false);
+  async function addTheme(name: string) {
+    setSavingTheme(true);
+    const res = await FeedThemeModel.save({ name, parentFeedThemeId: null });
+    //TODO: Add toasts for success and failures
+    if (res.status === 200) {
+      const data = await res.json();
+      console.log(data);
+      setThemeList([...themeList, data]);
+      setSavingTheme(false);
+      setShowAddThemeDialog(false);
+    } else {
+    }
   }
 
   return (
@@ -189,11 +199,20 @@ export default function ThemeListManager() {
                 >
                   Cancel
                 </AlertDialog.Close>
-                <input
+                <button
                   type="submit"
-                  className="cursor-pointer flex h-10 items-center justify-center rounded-md border border-blue-200 bg-blue-50 px-3.5 text-base font-medium text-blue-700 select-none hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-600 active:bg-blue-100"
-                  value="Create"
-                />
+                  className="cursor-pointer flex gap-2 h-10 items-center justify-center rounded-md border border-blue-200 bg-blue-50 px-3.5 text-base font-medium text-blue-700 select-none hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-600 active:bg-blue-100"
+                >
+                  <span>Create</span>
+                  {savingTheme && (
+                    <LoaderCircle
+                      width={20}
+                      height={20}
+                      className="opacity-70 animate-spin"
+                      color="#1a1a1a"
+                    />
+                  )}
+                </button>
               </div>
             </form>
           </AlertDialog.Popup>

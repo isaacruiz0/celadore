@@ -11,7 +11,7 @@ export interface Channel {
 }
 
 export interface FeedTheme {
-  id: string;
+  id?: string;
   name: string;
   // In the case of themes within themes
   parentFeedThemeId: string | null;
