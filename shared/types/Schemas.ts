@@ -4,10 +4,10 @@ export interface Channel {
   profilePictureURL: string;
   youtubeChannelId: string;
   username: string;
-  // User that owns this data
-  userId?: string;
   // Theme this channel is for
   parentFeedThemeId?: string;
+  // User that owns this data
+  // userId?: string;
 }
 
 export interface FeedTheme {
@@ -15,4 +15,6 @@ export interface FeedTheme {
   name: string;
   // In the case of themes within themes
   parentFeedThemeId: string | null;
+  // User that owns this data
+  // userId: string;
 }
