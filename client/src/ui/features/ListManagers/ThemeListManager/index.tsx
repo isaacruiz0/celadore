@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LoaderCircle } from 'lucide-react';
 import { AlertDialog } from '@base-ui/react/alert-dialog';
 import { SquarePlus, SquareMinus, ChevronsRight, XIcon } from 'lucide-react';
@@ -18,7 +18,7 @@ function MyThemesList({
 }: {
   myThemes: FeedTheme[];
   viewMode: ViewMode;
-  onRemove: (themeId: number) => void;
+  onRemove: (themeId: string) => void;
 }) {
   const renderThemeItem = (
     theme: FeedTheme,
@@ -110,7 +110,7 @@ function MyThemesList({
 
 export default function ThemeListManager() {
   const [viewMode, setViewMode] = useState<ViewMode>('show');
-  const [themeList, setThemeList] = useState<Theme[]>([]);
+  const [themeList, setThemeList] = useState<FeedTheme[]>([]);
   const [showAddThemeDialog, setShowAddThemeDialog] = useState<boolean>(false);
   const [createThemeInputValue, setCreateThemeInputValue] =
     useState<string>('');
@@ -129,21 +129,39 @@ export default function ThemeListManager() {
     },
   ];
 
+  /**
+   * @description gets and sets initial themes
+   */
+  const getThemes = async () => {
+    try {
+      const res = await FeedThemeModel.getAll();
+      if (res.status === 200) {
+        const themes = await res.json();
+        setThemeList(themes);
+      }
+    } catch (err) {
+      console.log('error getting all themes', err);
+    }
+  };
+  useEffect(() => {
+    getThemes();
+  }, []);
+
   // Event Handlers
-  function deleteTheme(themeId: number) {
+  function deleteTheme(themeId: FeedTheme['id']) {
     setThemeList(themeList.filter((theme) => theme.id !== themeId));
   }
   async function addTheme(name: string) {
     setSavingTheme(true);
     const res = await FeedThemeModel.save({ name, parentFeedThemeId: null });
-    //TODO: Add toasts for success and failures
     if (res.status === 200) {
       const data = await res.json();
-      console.log(data);
       setThemeList([...themeList, data]);
       setSavingTheme(false);
       setShowAddThemeDialog(false);
     } else {
+      //TODO: Add toasts for success and failures
+      console.log('failed adding thtme');
     }
   }
 

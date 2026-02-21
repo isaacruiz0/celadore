@@ -16,4 +16,14 @@ router.post(basePath, async (req: Request, res: Response) => {
   }
 });
 
+router.get(basePath, async (req: Request, res: Response) => {
+  try {
+    const themes = await FeedThemesModel.find();
+    return res.status(200).send(themes);
+  } catch (err) {
+    console.log("Error getting themes from db:", err);
+    return res.status(400).end();
+  }
+});
+
 export default router;

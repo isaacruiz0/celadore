@@ -11,4 +11,10 @@ const save = async (feedTheme: FeedTheme) => {
   return res;
 };
 
-export default { save };
+// TODO: pass in user id
+const getAll = async () => {
+  const res = await fetch(basePath);
+  return res;
+};
+
+export default { save, getAll };
