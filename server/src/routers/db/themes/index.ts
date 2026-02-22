@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import FeedThemesModel from "../../../models/FeedThemes";
+import ChannelModel from "../../../models/Channel";
 const router = express.Router();
 
 const basePath = "/db/themes";
@@ -22,6 +23,18 @@ router.get(basePath, async (req: Request, res: Response) => {
     return res.status(200).send(themes);
   } catch (err) {
     console.log("Error getting themes from db:", err);
+    return res.status(400).end();
+  }
+});
+
+router.delete(basePath, async (req: Request, res: Response) => {
+  const { id } = req.query;
+  try {
+    await FeedThemesModel.findByIdAndDelete(id);
+    await ChannelModel.deleteMany({ parentFeedThemeId: id });
+    return res.status(200).end();
+  } catch (err) {
+    console.log("Error deleting themes from db: ", err);
     return res.status(400).end();
   }
 });

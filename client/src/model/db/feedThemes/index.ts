@@ -17,4 +17,11 @@ const getAll = async () => {
   return res;
 };
 
-export default { save, getAll };
+const deleteOne = async (feedThemeId: FeedTheme['id']) => {
+  const res = await fetch(basePath + `?id=${feedThemeId}`, {
+    method: 'POST',
+  });
+  return res;
+};
+
+export default { save, getAll, deleteOne };

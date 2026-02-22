@@ -6,7 +6,6 @@ const ChannelSchema = new mongoose.Schema<Channel>({
   profilePictureURL: String,
   youtubeChannelId: String,
   username: String,
-  userId: String,
   parentFeedThemeId: String,
 });
 

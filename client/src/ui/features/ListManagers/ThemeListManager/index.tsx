@@ -18,12 +18,12 @@ function MyThemesList({
 }: {
   myThemes: FeedTheme[];
   viewMode: ViewMode;
-  onRemove: (themeId: string) => void;
+  onRemove: (themeId: FeedTheme['id']) => void;
 }) {
   const renderThemeItem = (
     theme: FeedTheme,
     viewMode: ViewMode,
-    onRemove: (themeId: number) => void,
+    onRemove: (themeId: FeedTheme['id']) => void,
   ) => {
     switch (viewMode) {
       case 'remove':
@@ -148,8 +148,15 @@ export default function ThemeListManager() {
   }, []);
 
   // Event Handlers
-  function deleteTheme(themeId: FeedTheme['id']) {
-    setThemeList(themeList.filter((theme) => theme.id !== themeId));
+  async function deleteTheme(themeId: FeedTheme['id']) {
+    try {
+      const res = await FeedThemeModel.deleteOne(themeId);
+      if (res.status === 200) {
+        setThemeList(themeList.filter((theme) => theme.id !== themeId));
+      }
+    } catch (err) {
+      console.log('failed deleting them');
+    }
   }
   async function addTheme(name: string) {
     setSavingTheme(true);
@@ -161,7 +168,7 @@ export default function ThemeListManager() {
       setShowAddThemeDialog(false);
     } else {
       //TODO: Add toasts for success and failures
-      console.log('failed adding thtme');
+      console.log('failed adding theme');
     }
   }
 
