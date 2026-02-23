@@ -14,10 +14,11 @@ const ChannelSchema = z.object({
   name: z.coerce.string<string>(),
   username: z.coerce.string<string>(),
   youtubeChannelId: z.coerce.string<string>(),
+  parentFeedThemeId: z.coerce.string<string>(),
 });
 
 router.get(basePath, async (req: Request, res: Response) => {
-  const { handle } = req.query;
+  const { handle, feedThemeId } = req.query;
   const youtubeAPIQuery = `?part=snippet&forHandle=${handle}&key=${process.env.YOUTUBE_API}`;
   const targetAPI = youtubeChannelAPI + youtubeAPIQuery;
   let channel: Channel | null = null;
@@ -29,8 +30,11 @@ router.get(basePath, async (req: Request, res: Response) => {
       profilePictureURL: fetchedChannel.snippet.thumbnails.default.url,
       username: handle,
       youtubeChannelId: fetchedChannel.id,
+      parentFeedThemeId: feedThemeId,
     };
     channel = ChannelSchema.parse(channelProps);
+
+    return res.status(200).send(channel);
   } catch (err) {
     if (err instanceof z.ZodError) {
       console.log("Zod errors: " + err.issues);
@@ -38,11 +42,8 @@ router.get(basePath, async (req: Request, res: Response) => {
     if (err instanceof Error) {
       console.log("Getting channel failed, error: " + err.message);
     }
-
     return res.status(400).end();
   }
-
-  return res.status(200).send(channel);
 });
 
 export default router;

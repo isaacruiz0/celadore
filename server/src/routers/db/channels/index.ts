@@ -6,8 +6,9 @@ const router = express.Router();
 const basePath = "/db/channels";
 
 router.get(basePath, async (req: Request, res: Response) => {
+  const { parentFeedThemeId } = req.query;
   try {
-    const channels = await ChannelModel.find();
+    const channels = await ChannelModel.find({ parentFeedThemeId });
     return res.status(200).send(channels);
   } catch (err) {
     console.log("getting all channels from db failed", err);

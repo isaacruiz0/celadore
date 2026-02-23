@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SquarePlus, Search, LoaderCircle } from 'lucide-react';
-import type { Channel } from '../../../../../shared/types/Schemas';
+import type { Channel, FeedTheme } from '../../../../../shared/types/Schemas';
 import channelService from '@/model/youtube/channels/index';
 import type { ViewMode } from './types';
 
@@ -45,8 +45,10 @@ function SearchButton({
 
 function ChannelSearchBar({
   addHandler,
+  feedThemeId,
 }: {
   addHandler: (channel: Channel) => void;
+  feedThemeId: FeedTheme['id'];
 }) {
   const [viewMode, setViewMode] = useState<ViewMode>('default');
   const [searchChannelInput, setSearchChannelInput] = useState<string>('');
@@ -99,7 +101,7 @@ function ChannelSearchBar({
 
   async function searchChannel(channelUsername: string) {
     setViewMode('searching');
-    const res = await channelService.get(channelUsername);
+    const res = await channelService.get(channelUsername, feedThemeId);
     if (res.status === 400) {
       setViewMode('notFound');
     } else if (res.status === 200) {

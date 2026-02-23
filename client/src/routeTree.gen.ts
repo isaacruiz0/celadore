@@ -12,7 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ExperiencesIndexRouteImport } from './routes/experiences/index'
 import { Route as ExperiencesYoutubeIndexRouteImport } from './routes/experiences/youtube/index'
-import { Route as ExperiencesYoutubeThemesThemeIdRouteImport } from './routes/experiences/youtube/themes/$themeId'
+import { Route as ExperiencesYoutubeThemesThemeNameRouteImport } from './routes/experiences/youtube/themes/$themeName'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,10 +29,10 @@ const ExperiencesYoutubeIndexRoute = ExperiencesYoutubeIndexRouteImport.update({
   path: '/experiences/youtube/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ExperiencesYoutubeThemesThemeIdRoute =
-  ExperiencesYoutubeThemesThemeIdRouteImport.update({
-    id: '/experiences/youtube/themes/$themeId',
-    path: '/experiences/youtube/themes/$themeId',
+const ExperiencesYoutubeThemesThemeNameRoute =
+  ExperiencesYoutubeThemesThemeNameRouteImport.update({
+    id: '/experiences/youtube/themes/$themeName',
+    path: '/experiences/youtube/themes/$themeName',
     getParentRoute: () => rootRouteImport,
   } as any)
 
@@ -40,20 +40,20 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/experiences': typeof ExperiencesIndexRoute
   '/experiences/youtube': typeof ExperiencesYoutubeIndexRoute
-  '/experiences/youtube/themes/$themeId': typeof ExperiencesYoutubeThemesThemeIdRoute
+  '/experiences/youtube/themes/$themeName': typeof ExperiencesYoutubeThemesThemeNameRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/experiences': typeof ExperiencesIndexRoute
   '/experiences/youtube': typeof ExperiencesYoutubeIndexRoute
-  '/experiences/youtube/themes/$themeId': typeof ExperiencesYoutubeThemesThemeIdRoute
+  '/experiences/youtube/themes/$themeName': typeof ExperiencesYoutubeThemesThemeNameRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/experiences/': typeof ExperiencesIndexRoute
   '/experiences/youtube/': typeof ExperiencesYoutubeIndexRoute
-  '/experiences/youtube/themes/$themeId': typeof ExperiencesYoutubeThemesThemeIdRoute
+  '/experiences/youtube/themes/$themeName': typeof ExperiencesYoutubeThemesThemeNameRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -61,26 +61,26 @@ export interface FileRouteTypes {
     | '/'
     | '/experiences'
     | '/experiences/youtube'
-    | '/experiences/youtube/themes/$themeId'
+    | '/experiences/youtube/themes/$themeName'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/experiences'
     | '/experiences/youtube'
-    | '/experiences/youtube/themes/$themeId'
+    | '/experiences/youtube/themes/$themeName'
   id:
     | '__root__'
     | '/'
     | '/experiences/'
     | '/experiences/youtube/'
-    | '/experiences/youtube/themes/$themeId'
+    | '/experiences/youtube/themes/$themeName'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ExperiencesIndexRoute: typeof ExperiencesIndexRoute
   ExperiencesYoutubeIndexRoute: typeof ExperiencesYoutubeIndexRoute
-  ExperiencesYoutubeThemesThemeIdRoute: typeof ExperiencesYoutubeThemesThemeIdRoute
+  ExperiencesYoutubeThemesThemeNameRoute: typeof ExperiencesYoutubeThemesThemeNameRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -106,11 +106,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExperiencesYoutubeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/experiences/youtube/themes/$themeId': {
-      id: '/experiences/youtube/themes/$themeId'
-      path: '/experiences/youtube/themes/$themeId'
-      fullPath: '/experiences/youtube/themes/$themeId'
-      preLoaderRoute: typeof ExperiencesYoutubeThemesThemeIdRouteImport
+    '/experiences/youtube/themes/$themeName': {
+      id: '/experiences/youtube/themes/$themeName'
+      path: '/experiences/youtube/themes/$themeName'
+      fullPath: '/experiences/youtube/themes/$themeName'
+      preLoaderRoute: typeof ExperiencesYoutubeThemesThemeNameRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -120,7 +120,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ExperiencesIndexRoute: ExperiencesIndexRoute,
   ExperiencesYoutubeIndexRoute: ExperiencesYoutubeIndexRoute,
-  ExperiencesYoutubeThemesThemeIdRoute: ExperiencesYoutubeThemesThemeIdRoute,
+  ExperiencesYoutubeThemesThemeNameRoute:
+    ExperiencesYoutubeThemesThemeNameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

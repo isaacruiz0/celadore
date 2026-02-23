@@ -71,7 +71,8 @@ function MyThemesList({
       case 'show':
         return (
           <Link
-            to={'/experiences/youtube/themes/' + theme.name + `?id=${theme.id}`}
+            to={'/experiences/youtube/themes/' + theme.name}
+            search={{ id: theme.id }}
             className="flex justify-between items-center px-6 py-8 bg-transparent backdrop-blur-md text-3xl text-[#224] border-b-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
             style={{
               boxShadow:
@@ -160,7 +161,9 @@ export default function ThemeListManager() {
   }
   async function addTheme(name: string) {
     setSavingTheme(true);
-    const res = await FeedThemeModel.save({ name, parentFeedThemeId: null });
+    const res = await FeedThemeModel.save({
+      name,
+    });
     if (res.status === 200) {
       const data = await res.json();
       setThemeList([...themeList, data]);

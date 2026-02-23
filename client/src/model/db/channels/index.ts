@@ -1,7 +1,10 @@
 import type { Channel } from '@/../../shared/types/Schemas';
+import type { FeedTheme } from '@/../../shared/types/Schemas';
 const basePath = '/api/db/channels';
-async function getAll(): Promise<Array<Channel>> {
-  return await fetch(basePath).then((r) => r.json());
+async function getAll(feedThemeId: FeedTheme['id']): Promise<Array<Channel>> {
+  return await fetch(`${basePath}?parentFeedThemeId=${feedThemeId}`).then((r) =>
+    r.json(),
+  );
 }
 
 async function addChannels(channels: Array<Channel>): Promise<Response> {

@@ -9,26 +9,31 @@ import ChannelSearchBar from '@/ui/features/ChannelSearchBar';
 import type { Channel } from '../../../../../../shared/types/Schemas';
 import dbChannelModel from '@/model/db/channels/index';
 
-export const Route = createFileRoute('/experiences/youtube/themes/$themeId')({
+export const Route = createFileRoute('/experiences/youtube/themes/$themeName')({
   component: FeedTheme,
 });
-async function getAllChannels(setChannels: (channels: Array<Channel>) => void) {
-  try {
-    const channels = await dbChannelModel.getAll();
-    setChannels(channels);
-  } catch (err) {
-    console.log(err);
-  }
-}
+
 function FeedTheme() {
   const [showChannelListManagerDialog, setShowChannelListManagerDialog] =
     useState<boolean>(false);
   const [channels, setChannels] = useState<Channel[]>([]);
   const [newChannels, setNewChannels] = useState<Channel[]>([]);
   const [savingNewChannels, setSavingNewChannels] = useState<boolean>(false);
-  const { themeId } = Route.useParams();
+  const { themeName } = Route.useParams();
+  // @ts-ignore
+  const { id } = Route.useSearch();
 
   useEffect(() => {
+    async function getAllChannels(
+      setChannels: (channels: Array<Channel>) => void,
+    ) {
+      try {
+        const channels = await dbChannelModel.getAll(id);
+        setChannels(channels);
+      } catch (err) {
+        console.log(err);
+      }
+    }
     getAllChannels(setChannels);
   }, []);
 
@@ -59,7 +64,7 @@ function FeedTheme() {
         </Link>
       </h1>
       <div className="mt-5 w-full">
-        <ListManagerHeader menuItems={menuItems} title={themeId} />
+        <ListManagerHeader menuItems={menuItems} title={themeName} />
       </div>
       <Dialog.Root open={showChannelListManagerDialog}>
         <Dialog.Portal>
@@ -68,7 +73,7 @@ function FeedTheme() {
             <Dialog.Title className="-mt-1.5 mb-1 text-lg font-medium">
               Channels
             </Dialog.Title>
-            <ChannelSearchBar addHandler={addChannel} />
+            <ChannelSearchBar addHandler={addChannel} feedThemeId={id} />
             <ChannelsListManager
               channelsData={channels}
               handleChannels={setChannels}

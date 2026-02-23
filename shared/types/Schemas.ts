@@ -5,7 +5,7 @@ export interface Channel {
   youtubeChannelId: string;
   username: string;
   // Theme this channel is for
-  parentFeedThemeId?: string;
+  parentFeedThemeId: string;
   // User that owns this data
   // userId?: string;
 }
@@ -14,7 +14,7 @@ export interface FeedTheme {
   id?: string;
   name: string;
   // In the case of themes within themes
-  parentFeedThemeId: string | null;
+  parentFeedThemeId?: string | null;
   // User that owns this data
   // userId: string;
 }
