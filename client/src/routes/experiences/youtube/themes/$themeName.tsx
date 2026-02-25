@@ -14,12 +14,18 @@ export const Route = createFileRoute('/experiences/youtube/themes/$themeName')({
   component: FeedTheme,
 });
 
+const today = new Date();
+let twoWeeksago = new Date();
+twoWeeksago.setDate(today.getDate() - 14);
+twoWeeksago.setHours(0, 0, 0);
+
 function FeedTheme() {
   const [showChannelListManagerDialog, setShowChannelListManagerDialog] =
     useState<boolean>(false);
   const [channels, setChannels] = useState<Channel[]>([]);
   const [newChannels, setNewChannels] = useState<Channel[]>([]);
   const [videos, setVideos] = useState([]);
+  const [dateRange, setDateRange] = useState<Date>(twoWeeksago);
   const [savingNewChannels, setSavingNewChannels] = useState<boolean>(false);
   const { themeName } = Route.useParams();
   // @ts-ignore
@@ -42,10 +48,21 @@ function FeedTheme() {
   useEffect(() => {
     if (!channels.length) return;
     async function getAndSetVideos() {
-      const videos = await videosService
-        .getVideosForChannels(channels.map((c) => c.uploadPlayListId))
-        .then((r) => r.json());
-      setVideos([...videos]);
+      let ret = await videosService.getVideosForChannels(
+        channels.map((c) => c.uploadPlayListId),
+      );
+      if (!ret.length) return;
+
+      //@ts-ignore
+      ret.forEach((videoObj) => {
+        videoObj.items = videoObj.items?.filter((item) => {
+          return (
+            new Date(item.contentDetails.videoPublishedAt).getTime() >
+            dateRange.getTime()
+          );
+        });
+      });
+      console.log(ret);
     }
     getAndSetVideos();
   }, [channels]);

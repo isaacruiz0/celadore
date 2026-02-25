@@ -15,6 +15,7 @@ const getVideosForChannels = async (
     return res;
   } catch (err) {
     console.log('Failed getting videos ' + err);
+    return err;
   }
 };
 
