@@ -15,22 +15,26 @@ const ChannelSchema = z.object({
   username: z.coerce.string<string>(),
   youtubeChannelId: z.coerce.string<string>(),
   parentFeedThemeId: z.coerce.string<string>(),
-});
+  uploadPlayListId: z.coerce.string<string>(),
+}) satisfies z.ZodType<Channel>;
 
 router.get(basePath, async (req: Request, res: Response) => {
   const { handle, feedThemeId } = req.query;
-  const youtubeAPIQuery = `?part=snippet&forHandle=${handle}&key=${process.env.YOUTUBE_API}`;
-  const targetAPI = youtubeChannelAPI + youtubeAPIQuery;
+  const channelQuery = `?part=snippet%2CcontentDetails&forHandle=${handle}&key=${process.env.YOUTUBE_API}`;
+
+  const targetAPI = youtubeChannelAPI + channelQuery;
   let channel: Channel | null = null;
   try {
     const data = await fetch(targetAPI).then((r) => r.json());
     const fetchedChannel = data.items[0];
+
     const channelProps = {
       name: fetchedChannel.snippet.title,
       profilePictureURL: fetchedChannel.snippet.thumbnails.default.url,
       username: handle,
       youtubeChannelId: fetchedChannel.id,
       parentFeedThemeId: feedThemeId,
+      uploadPlayListId: fetchedChannel.contentDetails.relatedPlaylists.uploads,
     };
     channel = ChannelSchema.parse(channelProps);
 

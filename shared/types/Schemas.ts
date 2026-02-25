@@ -6,6 +6,7 @@ export interface Channel {
   username: string;
   // Theme this channel is for
   parentFeedThemeId: string;
+  uploadPlayListId: string;
   // User that owns this data
   // userId?: string;
 }

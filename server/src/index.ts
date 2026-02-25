@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import youtubeChannelsRouter from "./routers/youtube/channels/index";
+import youtubeChannelVideosRouter from "./routers/youtube/channels/videos/index";
 import dbChannelsRouter from "./routers/db/channels/index";
 import dbFeedThemesRouter from "./routers/db/themes/index";
 import mongoose from "mongoose";
@@ -30,6 +31,7 @@ try {
 app.use("/api", youtubeChannelsRouter);
 app.use("/api", dbChannelsRouter);
 app.use("/api", dbFeedThemesRouter);
+app.use("/api", youtubeChannelVideosRouter);
 
 // SPA fallback
 app.all("*", (req: Request, res: Response) => {

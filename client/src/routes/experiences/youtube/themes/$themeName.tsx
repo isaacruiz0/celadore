@@ -8,6 +8,7 @@ import ChannelsListManager from '@/ui/features/ListManagers/ChannelsListManager'
 import ChannelSearchBar from '@/ui/features/ChannelSearchBar';
 import type { Channel } from '../../../../../../shared/types/Schemas';
 import dbChannelModel from '@/model/db/channels/index';
+import videosService from '@/model/youtube/channels/videos/index';
 
 export const Route = createFileRoute('/experiences/youtube/themes/$themeName')({
   component: FeedTheme,
@@ -18,6 +19,7 @@ function FeedTheme() {
     useState<boolean>(false);
   const [channels, setChannels] = useState<Channel[]>([]);
   const [newChannels, setNewChannels] = useState<Channel[]>([]);
+  const [videos, setVideos] = useState();
   const [savingNewChannels, setSavingNewChannels] = useState<boolean>(false);
   const { themeName } = Route.useParams();
   // @ts-ignore
@@ -36,6 +38,16 @@ function FeedTheme() {
     }
     getAllChannels(setChannels);
   }, []);
+
+  useEffect(() => {
+    if (!channels.length) return;
+    async function getAndSetVideos() {
+      const videos = await videosService
+        .getVideosForChannels(channels.map((c) => c.uploadPlayListId))
+        .then((r) => r.json());
+    }
+    getAndSetVideos();
+  }, [channels]);
 
   const menuItems = [
     {
