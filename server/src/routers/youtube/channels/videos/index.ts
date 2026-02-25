@@ -22,7 +22,7 @@ router.get(basePath, async (req: Request, res: Response) => {
   try {
     for (let i = 0; i < uploadPlayListIds?.length; i++) {}
     const data = await Promise.all(
-      uploadPlayListIds?.map((id  => {
+      uploadPlayListIds?.map(async (id) => {
         return await fetch(
           `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&publishedAfter=${twoWeeksAgoDate}&playlistId=${id}&key=${process.env.YOUTUBE_API}`,
         ).then((r) => r.json());

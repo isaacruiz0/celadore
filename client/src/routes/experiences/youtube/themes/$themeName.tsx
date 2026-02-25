@@ -19,7 +19,7 @@ function FeedTheme() {
     useState<boolean>(false);
   const [channels, setChannels] = useState<Channel[]>([]);
   const [newChannels, setNewChannels] = useState<Channel[]>([]);
-  const [videos, setVideos] = useState();
+  const [videos, setVideos] = useState([]);
   const [savingNewChannels, setSavingNewChannels] = useState<boolean>(false);
   const { themeName } = Route.useParams();
   // @ts-ignore
@@ -45,6 +45,7 @@ function FeedTheme() {
       const videos = await videosService
         .getVideosForChannels(channels.map((c) => c.uploadPlayListId))
         .then((r) => r.json());
+      setVideos([...videos]);
     }
     getAndSetVideos();
   }, [channels]);
