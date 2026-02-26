@@ -13,5 +13,6 @@ export type VideoItem = {
   channelName: string;
   description: string;
   thumbnailURL: string;
+  datePublished: string;
   id: string;
 };

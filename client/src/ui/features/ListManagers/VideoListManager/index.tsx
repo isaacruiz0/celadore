@@ -7,6 +7,11 @@ export default function VideoListManager({
   return (
     <div>
       {videoItemsList.map((videoItem, index) => {
+        const formattedDate = new Intl.DateTimeFormat('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        }).format(new Date(videoItem.datePublished));
         return (
           <div
             key={videoItem.id}
@@ -19,18 +24,18 @@ export default function VideoListManager({
                 '0 0 25px rgba(26, 26, 26, 0.12), inset 0 0 25px rgba(242, 213, 166, 0.2)',
             }}
           >
-            <div className="flex gap-2">
-              <img
-                src={videoItem.thumbnailURL}
-                className="w-60 h-40 rounded object-cover"
-              />
-              <div className="flex flex-col gap-1">
+            <div className="flex gap-6">
+              <div className="flex flex-col gap-5 max-w-[66%]">
                 <p className="text-3xl">{videoItem.title}</p>
-                <p className="text-sm opacity-60">{videoItem.channelName}</p>
+                <p className="text-md truncate">{videoItem.description}</p>
+                <div className="flex flex-col gap-1">
+                  <p className="text-sm opacity-60">{formattedDate}</p>
+                  <p className="text-sm opacity-60">
+                    By {videoItem.channelName}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="px-5 py-2 bg-[#224]/5 rounded">
-              <p className="text-md truncate">{videoItem.description}</p>
+              <img src={videoItem.thumbnailURL} className="object-cover" />
             </div>
           </div>
         );

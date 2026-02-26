@@ -74,8 +74,9 @@ function FeedTheme() {
           title: item.snippet.title,
           channelName: item.snippet.channelTitle,
           description: item.snippet.description,
-          thumbnailURL: item.snippet.thumbnails.default.url,
+          thumbnailURL: item.snippet.thumbnails.high.url,
           id: item.contentDetails.videoId,
+          datePublished: item.contentDetails.videoPublishedAt,
         });
       });
       console.log(data);
