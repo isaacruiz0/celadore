@@ -24,9 +24,9 @@ export default function VideoListManager({
                 '0 0 25px rgba(26, 26, 26, 0.12), inset 0 0 25px rgba(242, 213, 166, 0.2)',
             }}
           >
-            <div className="flex gap-6">
-              <div className="flex flex-col gap-5 max-w-[66%]">
-                <p className="text-3xl">{videoItem.title}</p>
+            <div className="flex flex-col-reverse gap-0 md:flex-row md:gap-6">
+              <div className="flex flex-col gap-5 md:max-w-[66%]">
+                <p className="text-xl">{videoItem.title}</p>
                 <p className="text-md truncate">{videoItem.description}</p>
                 <div className="flex flex-col gap-1">
                   <p className="text-sm opacity-60">{formattedDate}</p>
@@ -35,7 +35,13 @@ export default function VideoListManager({
                   </p>
                 </div>
               </div>
-              <img src={videoItem.thumbnailURL} className="object-cover" />
+              <img
+                src={videoItem.thumbnailURL}
+                className="rounded-5xl"
+                style={{
+                  clipPath: 'inset( 13.5% 0px 13.5% 0px)',
+                }}
+              />
             </div>
           </div>
         );
