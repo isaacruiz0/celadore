@@ -9,6 +9,8 @@ import ChannelSearchBar from '@/ui/features/ChannelSearchBar';
 import type { Channel } from '../../../../../../shared/types/Schemas';
 import dbChannelModel from '@/model/db/channels/index';
 import videosService from '@/model/youtube/channels/videos/index';
+import VideoListManager from '@/ui/features/ListManagers/VideoListManager/index';
+import type { VideoItem } from '@/ui/features/ListManagers/types';
 
 export const Route = createFileRoute('/experiences/youtube/themes/$themeName')({
   component: FeedTheme,
@@ -24,7 +26,7 @@ function FeedTheme() {
     useState<boolean>(false);
   const [channels, setChannels] = useState<Channel[]>([]);
   const [newChannels, setNewChannels] = useState<Channel[]>([]);
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState<VideoItem[]>([]);
   const [dateRange, setDateRange] = useState<Date>(twoWeeksago);
   const [savingNewChannels, setSavingNewChannels] = useState<boolean>(false);
   const { themeName } = Route.useParams();
@@ -54,15 +56,30 @@ function FeedTheme() {
       if (!ret.length) return;
 
       //@ts-ignore
-      ret.forEach((videoObj) => {
+      ret = ret.reduce((acc, videoObj) => {
+        //@ts-ignore
         videoObj.items = videoObj.items?.filter((item) => {
           return (
             new Date(item.contentDetails.videoPublishedAt).getTime() >
             dateRange.getTime()
           );
         });
+
+        return acc.concat(videoObj.items);
+      }, []);
+      const data: VideoItem[] = [];
+      //@ts-ignore
+      ret.forEach((item) => {
+        data.push({
+          title: item.snippet.title,
+          channelName: item.snippet.channelTitle,
+          description: item.snippet.description,
+          thumbnailURL: item.snippet.thumbnails.default.url,
+          id: item.contentDetails.videoId,
+        });
       });
-      console.log(ret);
+      console.log(data);
+      setVideos(data);
     }
     getAndSetVideos();
   }, [channels]);
@@ -150,6 +167,7 @@ function FeedTheme() {
           </Dialog.Popup>
         </Dialog.Portal>
       </Dialog.Root>
+      <VideoListManager videoItemsList={videos} />
     </div>
   );
 }
