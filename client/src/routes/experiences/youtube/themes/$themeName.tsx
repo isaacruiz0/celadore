@@ -50,36 +50,24 @@ function FeedTheme() {
   useEffect(() => {
     if (!channels.length) return;
     async function getAndSetVideos() {
+      // TODO: Add res type here somehow
       let ret = await videosService.getVideosForChannels(
         channels.map((c) => c.uploadPlayListId),
       );
       if (!ret.length) return;
-
-      //@ts-ignore
-      ret = ret.reduce((acc, videoObj) => {
-        //@ts-ignore
-        videoObj.items = videoObj.items?.filter((item) => {
-          return (
-            new Date(item.contentDetails.videoPublishedAt).getTime() >
-            dateRange.getTime()
-          );
-        });
-
-        return acc.concat(videoObj.items);
-      }, []);
       const data: VideoItem[] = [];
       //@ts-ignore
       ret.forEach((item) => {
-        data.push({
+        const videoItem: VideoItem = {
           title: item.snippet.title,
           channelName: item.snippet.channelTitle,
           description: item.snippet.description,
           thumbnailURL: item.snippet.thumbnails.high.url,
           id: item.contentDetails.videoId,
           datePublished: item.contentDetails.videoPublishedAt,
-        });
+        };
+        data.push(videoItem);
       });
-      console.log(data);
       setVideos(data);
     }
     getAndSetVideos();

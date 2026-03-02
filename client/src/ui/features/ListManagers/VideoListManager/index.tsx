@@ -15,7 +15,7 @@ export default function VideoListManager({
         return (
           <div
             key={videoItem.id}
-            className="px-10 py-5 flex flex-col gap-2 bg-transparent backdrop-blur-md text-[#224] border-b-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
+            className="px-5 py-5 flex flex-col gap-2 bg-transparent backdrop-blur-md text-[#224] border-b-2 border-[#1a1a1a]/20 hover:border-[#1a1a1a]/50 transition-all duration-500 relative overflow-hidden"
             style={{
               animation: 'fadeInUp 0.5s ease-out forwards',
               animationDelay: `${index * 0.1}s`,
@@ -24,8 +24,8 @@ export default function VideoListManager({
                 '0 0 25px rgba(26, 26, 26, 0.12), inset 0 0 25px rgba(242, 213, 166, 0.2)',
             }}
           >
-            <div className="flex flex-col-reverse gap-0 md:flex-row md:gap-6">
-              <div className="flex flex-col gap-5 md:max-w-[66%]">
+            <div className="flex flex-col-reverse  gap-0 md:flex-row md:gap-6">
+              <div className="flex flex-col gap-10 md:max-w-[66%] ">
                 <p className="text-xl">{videoItem.title}</p>
                 <p className="text-md truncate">{videoItem.description}</p>
                 <div className="flex flex-col gap-1">
@@ -37,9 +37,9 @@ export default function VideoListManager({
               </div>
               <img
                 src={videoItem.thumbnailURL}
-                className="rounded-5xl"
+                className="mt-[-10%] md:mt-0"
                 style={{
-                  clipPath: 'inset( 13.5% 0px 13.5% 0px)',
+                  clipPath: 'inset(13.5% 0px 13.5% 0px round 12px)',
                 }}
               />
             </div>

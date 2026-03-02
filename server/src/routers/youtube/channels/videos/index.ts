@@ -1,7 +1,24 @@
 import express, { Request, Response } from "express";
 import fs from "fs";
+import { FeedContentType } from "../../../../../../shared/types/FeedConfigs";
+import { VideoItem } from "../../../../";
 
 const router = express.Router();
+
+function filterDateRange(dateRange: Date) {
+  //@ts-ignore
+  ret = ret.reduce((acc, videoObj) => {
+    //@ts-ignore
+    videoObj.items = videoObj.items?.filter((item) => {
+      return (
+        new Date(item.contentDetails.videoPublishedAt).getTime() >
+        dateRange.getTime()
+      );
+    });
+
+    return acc.concat(videoObj.items);
+  }, []);
+}
 
 const basePath = "/youtube/channels/videos";
 router.get(basePath, async (req: Request, res: Response) => {
@@ -14,8 +31,11 @@ router.get(basePath, async (req: Request, res: Response) => {
     // @ts-ignore
     uploadPlayListIds = [uploadPlayListIds];
   }
-  // TODO: Connect this with user's date frequency selection
-  const twoWeeksAgo = new Date();
+  // TODO: Grab user preferences and use that for their configured video feed
+  // TODO: Connect this with a user document
+  const dateRange: Date = new Date();
+  const feedContentType: FeedContentType = FeedContentType.VIDEO;
+  const userPreferences = { dateRange, feedContentType };
 
   if (!uploadPlayListIds?.length) {
     res.status(404).end();
