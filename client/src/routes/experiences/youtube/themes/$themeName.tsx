@@ -10,7 +10,7 @@ import type { Channel } from '../../../../../../shared/types/Schemas';
 import dbChannelModel from '@/model/db/channels/index';
 import videosService from '@/model/youtube/channels/videos/index';
 import VideoListManager from '@/ui/features/ListManagers/VideoListManager/index';
-import type { VideoItem } from '@/ui/features/ListManagers/types';
+import type { VideoItem } from '@/../../shared/types/API';
 
 export const Route = createFileRoute('/experiences/youtube/themes/$themeName')({
   component: FeedTheme,
@@ -54,20 +54,8 @@ function FeedTheme() {
         channels.map((c) => c.uploadPlayListId),
       );
       if (!ret.length) return;
-      const data: VideoItem[] = [];
-      //@ts-ignore
-      ret.forEach((item) => {
-        const videoItem: VideoItem = {
-          title: item.snippet.title,
-          channelName: item.snippet.channelTitle,
-          description: item.snippet.description,
-          thumbnailURL: item.snippet.thumbnails.high.url,
-          id: item.contentDetails.videoId,
-          datePublished: item.contentDetails.videoPublishedAt,
-        };
-        data.push(videoItem);
-      });
-      setVideos(data);
+
+      setVideos(ret);
     }
     getAndSetVideos();
   }, [channels]);
