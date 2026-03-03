@@ -50,7 +50,6 @@ function FeedTheme() {
   useEffect(() => {
     if (!channels.length) return;
     async function getAndSetVideos() {
-      // TODO: Add res type here somehow
       let ret = await videosService.getVideosForChannels(
         channels.map((c) => c.uploadPlayListId),
       );
