@@ -52,7 +52,9 @@ function VideoCard({
             >
               {videoItem.description}
             </span>
-            <span>{showReadMore ? '...more' : null}</span>
+            <span className="cursor-pointer">
+              {showReadMore ? '...more' : null}
+            </span>
           </p>
           <div className="flex justify-between">
             <div className="flex flex-col gap-1">
