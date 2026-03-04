@@ -34,9 +34,9 @@ function VideoCard({
         opacity: 0,
       }}
     >
-      <div className="flex flex-col-reverse  gap-0 md:flex-row md:gap-6">
+      <div className="flex flex-col-reverse  gap-0 md:flex-row md:items-center md:gap-6">
         <div className="flex flex-col gap-10 md:max-w-[66%] ">
-          <p className="text-xl">{videoItem.title}</p>
+          <p className="text-xl md:text-3xl">{videoItem.title}</p>
           <p
             onClick={function () {
               setReadMore(!readMore);
