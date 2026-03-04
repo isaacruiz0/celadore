@@ -64,10 +64,17 @@ function VideoCard({
             <div className="flex flex-col gap-2 md:flex-row">
               <Link
                 to="/experiences/youtube/themes/watch"
-                search={{ id: videoItem.id, themeId: id }}
+                search={{
+                  id: videoItem.id,
+                  themeId: id,
+                  description: videoItem.description,
+                  title: videoItem.title,
+                  date: videoItem.datePublished,
+                  channelName: videoItem.channelName,
+                }}
                 className="py-2 cursor-pointer opacity-60 flex items-center gap-1 rounded-md border border-gray-500 bg-gray-50/5 px-3.5 text-base font-medium text-gray-900 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100"
               >
-                <span>Play</span>
+                <span>Watch</span>
                 <Play size={15} />
               </Link>
               {/*<button className="cursor-pointer h-10 items-center justify-center rounded-md border border-gray-200 bg-gray-50/5 px-3.5 text-base font-medium text-gray-900 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100">
