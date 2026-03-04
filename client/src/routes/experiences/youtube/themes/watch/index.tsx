@@ -42,7 +42,7 @@ function Watch() {
           src={`https://www.youtube.com/embed/${id}`}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
-          className="aspect-video rounded-2xl"
+          className="aspect-video rounded-2xl w-full"
         />
         <div className="flex flex-col gap-10">
           <p className="text-xl md:text-3xl">{title}</p>
