@@ -38,8 +38,8 @@ function VideoCard({
         opacity: 0,
       }}
     >
-      <div className="flex flex-col-reverse  gap-0 md:flex-row md:items-center md:gap-6">
-        <div className="flex flex-col gap-10 md:max-w-[66%] ">
+      <div className="flex flex-col-reverse md:flex-row md:items-center md:gap-6">
+        <div className="flex flex-1 flex-col gap-10 md:max-w-[66%] ">
           <p className="text-xl md:text-3xl">{videoItem.title}</p>
           <p
             onClick={function () {
@@ -56,7 +56,7 @@ function VideoCard({
               {showReadMore ? '...more' : null}
             </span>
           </p>
-          <div className="flex justify-between">
+          <div className="flex justify-between md:justify-start md:gap-15">
             <div className="flex flex-col gap-1">
               <p className="text-sm opacity-60">{formattedDate}</p>
               <p className="text-sm opacity-60">By {videoItem.channelName}</p>
