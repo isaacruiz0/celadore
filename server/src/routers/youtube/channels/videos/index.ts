@@ -12,15 +12,25 @@ const router = express.Router();
  * @returns
  */
 function filterDateRange(data: Array<VideoItem>, dateRange: Date) {
-  data.filter((videoItem) => {
+  data = data.filter((videoItem) => {
     return new Date(videoItem.datePublished).getTime() > dateRange.getTime();
   });
   return data;
 }
+function filterContentType(
+  data: Array<VideoItem>,
+  feedContentType: FeedContentType,
+) {
+  if (feedContentType === FeedContentType.VIDEO) {
+    // Ping youtube shorts header and only add if !200 that means it is not a short and is a video and should therefore be included and otherwise excluded
+  }
+  return data;
+}
 
-function constructChannelVideoData(data: Array<VideoItem>) {
+//@ts-ignore
+function constructChannelVideoData(rawVideoData) {
   //@ts-ignore
-  data = data.map((rawVideoItem) => {
+  const parsedVideoData: Array<VideoItem> = rawVideoData.map((rawVideoItem) => {
     const videoItem: VideoItem = {
       title: rawVideoItem.snippet.title,
       channelName: rawVideoItem.snippet.channelTitle,
@@ -31,7 +41,7 @@ function constructChannelVideoData(data: Array<VideoItem>) {
     };
     return videoItem;
   });
-  return data;
+  return parsedVideoData;
 }
 
 const basePath = "/youtube/channels/videos";
@@ -56,6 +66,7 @@ router.get(basePath, async (req: Request, res: Response) => {
   if (!uploadPlayListIds?.length) {
     res.status(404).end();
   }
+
   try {
     const ret = await Promise.all(
       uploadPlayListIds?.map(async (id) => {
@@ -68,8 +79,10 @@ router.get(basePath, async (req: Request, res: Response) => {
 
     for (let i = 0; i < ret.length; i++) {
       videoData = videoData.concat(constructChannelVideoData(ret[i].items));
-      videoData = filterDateRange(videoData, userPreferences.dateRange);
     }
+    videoData = filterDateRange(videoData, userPreferences.dateRange);
+    videoData = filterContentType(videoData, userPreferences.feedContentType);
+
     fs.writeFile("json-data.json", JSON.stringify(videoData), () => {});
 
     res.status(200).send(JSON.stringify(videoData));
