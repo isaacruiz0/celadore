@@ -23,7 +23,7 @@ const allPossibleExperiences: Array<Experience> = [
     id: 2,
     label: 'Reddit',
     href: '/experiences/reddit',
-    available: true,
+    available: false,
   },
   {
     id: 3,
@@ -242,7 +242,9 @@ export default function ExperienceListManager() {
 
   return (
     <div className="w-full">
-      <ListManagerHeader menuItems={menuItems} title="Experiences" />
+      <div className="animate-fade-in">
+        <ListManagerHeader menuItems={menuItems} title="Experiences" />
+      </div>
       {isOpen && (
         <NotSubscribedExperiencesSelector
           addExperience={addExperience}

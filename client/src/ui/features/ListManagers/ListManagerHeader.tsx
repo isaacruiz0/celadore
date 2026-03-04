@@ -10,7 +10,7 @@ export default function ListManagerHeader({
   menuItems: MenuItem[];
 }) {
   return (
-    <div className="w-full animate-fade-in px-6 py-4 bg-transparent backdrop-blur-md flex items-center justify-between border-x-0 border-2 border-[#1a1a1a]/20">
+    <div className="w-full px-6 py-4 bg-transparent backdrop-blur-md flex items-center justify-between border-x-0 border-2 border-[#1a1a1a]/20">
       <div className="text-left relative">
         <div className="font-semibold text-2xl text-[#224]">{title}</div>
       </div>
@@ -29,6 +29,7 @@ export default function ListManagerHeader({
 
                   return (
                     <Menu.Item
+                      key={menuItem.label}
                       onClick={menuItem.onClick}
                       className="flex gap-1 items-center cursor-pointer py-2 pr-8 pl-4 text-sm leading-4 outline-none select-none data-highlighted:relative data-highlighted:z-0 data-highlighted:text-gray-50 data-highlighted:before:absolute data-highlighted:before:inset-x-1 data-highlighted:before:inset-y-0 data-highlighted:before:z-[-1] data-highlighted:before:rounded-sm data-highlighted:before:bg-[#224]"
                     >
