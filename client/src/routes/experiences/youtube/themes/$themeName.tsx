@@ -19,18 +19,12 @@ export const Route = createFileRoute('/experiences/youtube/themes/$themeName')({
   }),
 });
 
-const today = new Date();
-let twoWeeksago = new Date();
-twoWeeksago.setDate(today.getDate() - 14);
-twoWeeksago.setHours(0, 0, 0);
-
 function FeedTheme() {
   const [showChannelListManagerDialog, setShowChannelListManagerDialog] =
     useState<boolean>(false);
   const [channels, setChannels] = useState<Channel[]>([]);
   const [newChannels, setNewChannels] = useState<Channel[]>([]);
   const [videos, setVideos] = useState<VideoItem[]>([]);
-  const [dateRange, setDateRange] = useState<Date>(twoWeeksago);
   const [savingNewChannels, setSavingNewChannels] = useState<boolean>(false);
   const { themeName } = Route.useParams();
   // @ts-ignore
