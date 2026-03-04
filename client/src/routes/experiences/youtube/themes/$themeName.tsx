@@ -14,6 +14,9 @@ import type { VideoItem } from '@/../../shared/types/API';
 
 export const Route = createFileRoute('/experiences/youtube/themes/$themeName')({
   component: FeedTheme,
+  validateSearch: (search) => ({
+    id: String(search.id ?? ''),
+  }),
 });
 
 const today = new Date();

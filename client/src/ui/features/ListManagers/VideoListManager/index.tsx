@@ -1,5 +1,8 @@
 import type { VideoItem } from '../../../../../../shared/types/API';
+import { Link } from '@tanstack/react-router';
+import { Play } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
+import { Route } from '@/routes/experiences/youtube/themes/$themeName';
 function VideoCard({
   videoItem,
   index,
@@ -10,6 +13,7 @@ function VideoCard({
   const [readMore, setReadMore] = useState<boolean>(false);
   const [showReadMore, setShowReadMore] = useState<boolean>(false);
   const elementRef = useRef<HTMLDivElement>(null);
+  const { id } = Route.useSearch();
 
   const formattedDate = new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
@@ -50,9 +54,24 @@ function VideoCard({
             </span>
             <span>{showReadMore ? '...more' : null}</span>
           </p>
-          <div className="flex flex-col gap-1">
-            <p className="text-sm opacity-60">{formattedDate}</p>
-            <p className="text-sm opacity-60">By {videoItem.channelName}</p>
+          <div className="flex justify-between">
+            <div className="flex flex-col gap-1">
+              <p className="text-sm opacity-60">{formattedDate}</p>
+              <p className="text-sm opacity-60">By {videoItem.channelName}</p>
+            </div>
+            <div className="flex flex-col gap-2 md:flex-row">
+              <Link
+                to="/experiences/youtube/themes/watch"
+                search={{ id: videoItem.id, themeId: id }}
+                className="py-2 cursor-pointer opacity-60 flex items-center gap-1 rounded-md border border-gray-500 bg-gray-50/5 px-3.5 text-base font-medium text-gray-900 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100"
+              >
+                <span>Play</span>
+                <Play size={15} />
+              </Link>
+              {/*<button className="cursor-pointer h-10 items-center justify-center rounded-md border border-gray-200 bg-gray-50/5 px-3.5 text-base font-medium text-gray-900 select-none hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 active:bg-gray-100">
+                <span className="opacity-60">Watch later</span>
+              </button>*/}
+            </div>
           </div>
         </div>
         <img
