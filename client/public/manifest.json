@@ -3,7 +3,7 @@
   "name": "Celadore",
   "icons": [
     {
-      "src": "favicon.svg",
+      "src": "app.svg",
       "sizes": "80x97",
       "type": "svg"
     }
