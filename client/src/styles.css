@@ -9,7 +9,6 @@
 @import 'tailwindcss';
 
 :root {
-  --light-bg: #f2d5a6;
   --dark-bg: #1a1a1a;
   --light: #f2f2f2;
   --dark: #1a1a1a;
@@ -21,6 +20,7 @@
 
 body {
   font-family: 'Lora', sans-serif;
+  background-color: #f9edd2;
 }
 
 body::before {
