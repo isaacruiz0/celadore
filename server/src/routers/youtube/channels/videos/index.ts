@@ -7,7 +7,7 @@ const router = express.Router();
 
 /**
  *
- * @param ret an array of
+ * @param ret an array of video items
  * @param dateRange
  * @returns
  */
@@ -42,6 +42,14 @@ function constructChannelVideoData(rawVideoData) {
     return videoItem;
   });
   return parsedVideoData;
+}
+function sortByLatestDatePublished(data: Array<VideoItem>): Array<VideoItem> {
+  const fromLatestSorted = data.toSorted((a, b) => {
+    const datePublishedA = new Date(b.datePublished),
+      datePublishedB = new Date(a.datePublished);
+    return Number(datePublishedA.getDate()) - Number(datePublishedB.getDate());
+  });
+  return fromLatestSorted;
 }
 
 const basePath = "/youtube/channels/videos";
@@ -81,7 +89,11 @@ router.get(basePath, async (req: Request, res: Response) => {
       videoData = videoData.concat(constructChannelVideoData(ret[i].items));
     }
     videoData = filterDateRange(videoData, userPreferences.dateRange);
-    videoData = filterContentType(videoData, userPreferences.feedContentType);
+    videoData = videoData = filterContentType(
+      videoData,
+      userPreferences.feedContentType,
+    );
+    videoData = sortByLatestDatePublished(videoData);
 
     fs.writeFile("json-data.json", JSON.stringify(videoData), () => {});
 
